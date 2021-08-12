@@ -1,3 +1,5 @@
+import 'package:yearly_flow/presentation/src/core/strings.dart';
+
 enum InspirationType {
   Note,
   BulletList,
@@ -9,11 +11,11 @@ enum InspirationType {
 extension InspirationTypeExtension on InspirationType {
   String get displayTitle {
     switch (this) {
-      case InspirationType.Note: return 'Notat';
-      case InspirationType.BulletList: return 'Liste';
-      case InspirationType.CheckList: return 'Sjekkliste';
-      case InspirationType.Recipe: return 'Oppskrift';
-      case InspirationType.Birthday: return 'Bursdag';
+      case InspirationType.Note: return Strings.inspirationType_note;
+      case InspirationType.BulletList: return Strings.inspirationType_bulletList;
+      case InspirationType.CheckList: return Strings.inspirationType_checkList;
+      case InspirationType.Recipe: return Strings.inspirationType_recipe;
+      case InspirationType.Birthday: return Strings.inspirationType_birthday;
     }
   }
 
