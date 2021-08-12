@@ -8,6 +8,7 @@ import 'package:yearly_flow/domain/src/entity/recipe.dart';
 import 'package:yearly_flow/domain/src/util/enums/inspiration_type.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/presentation/src/widgets/date_picker.dart';
+import 'package:yearly_flow/presentation/src/core/strings.dart';
 
 class CardTemplate {
   List<Widget> getTemplateList(List<Inspiration> inspirations) {
@@ -86,7 +87,7 @@ class CardTemplate {
           fontWeight: FontWeight.bold,
         ),
         decoration: InputDecoration(
-          hintText: 'Tittel',
+          hintText: Strings.cardContent_title,
           hintStyle: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -97,7 +98,7 @@ class CardTemplate {
       ),
       TextField(
         decoration: InputDecoration(
-          hintText: 'Tekst til inspirasjon',
+          hintText: Strings.cardContent_text,
         ),
       ),
     ];
@@ -120,7 +121,7 @@ class CardTemplate {
     return <Widget>[
       const TextField(
         decoration: InputDecoration(
-          hintText: 'Navn',
+          hintText: Strings.birthday_name,
         ),
       ),
       const SizedBox(
@@ -155,7 +156,7 @@ class CardTemplate {
           fontWeight: FontWeight.bold,
         ),
         decoration: InputDecoration(
-          hintText: 'Tittel',
+          hintText: Strings.cardContent_title,
           hintStyle: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -168,7 +169,7 @@ class CardTemplate {
         minLines: 5,
         maxLines: 20,
         decoration: InputDecoration(
-          hintText: 'Liste',
+          hintText: Strings.inspirationType_bulletList,
         ),
       ),
     ];
@@ -223,7 +224,7 @@ class CardTemplate {
           fontWeight: FontWeight.bold,
         ),
         decoration: InputDecoration(
-          hintText: 'Tittel',
+          hintText: Strings.cardContent_title,
           hintStyle: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -236,7 +237,7 @@ class CardTemplate {
         minLines: 1,
         maxLines: 5,
         decoration: InputDecoration(
-          hintText: 'Intro',
+          hintText: Strings.recipe_introduction,
         ),
       ),
       const SizedBox(
@@ -246,7 +247,7 @@ class CardTemplate {
         minLines: 5,
         maxLines: 20,
         decoration: InputDecoration(
-          hintText: 'Ingredienser',
+          hintText: Strings.recipe_ingredients,
         ),
       ),
       const SizedBox(
@@ -256,7 +257,7 @@ class CardTemplate {
         minLines: 1,
         maxLines: 20,
         decoration: InputDecoration(
-          hintText: 'Fremgangsmåte',
+          hintText: Strings.recipe_instructions,
         ),
       ),
     ];

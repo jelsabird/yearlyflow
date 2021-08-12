@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:yearly_flow/presentation/src/core/strings.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _DatePickerState extends State<DatePicker> {
         readOnly: true,
         controller: dateController,
         decoration: const InputDecoration(
-          hintText: 'Fødselsdag',
+          hintText: Strings.birthday_date,
         ),
         onTap: () async {
           final DateTime? date = await showDatePicker(

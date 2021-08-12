@@ -11,6 +11,7 @@ import 'package:yearly_flow/domain/src/util/enums/inspiration_type.dart';
 import 'package:yearly_flow/domain/src/util/enums/month.dart';
 import 'package:yearly_flow/domain/src/util/enums/time_of_month.dart';
 import 'package:yearly_flow/presentation/src/widgets/card_template.dart';
+import 'package:yearly_flow/presentation/src/core/strings.dart';
 
 class AddCardPage extends StatefulWidget {
   const AddCardPage({Key? key}) : super(key: key);
@@ -39,15 +40,14 @@ class _AddCardPageState extends State<AddCardPage> {
     return Scaffold(
         backgroundColor: const Color(0xFF303030),
         appBar: AppBar(
-          title: Text(
-            'Legg til inspirasjonskort for ${inspiration.month.displayTitle.toLowerCase()}',
+          title: Text(Strings.addCard_pageTitle,
             style: const TextStyle(color: Colors.white, height: 40),
           ),
         ),
         body: Column(
           children: <Widget>[
             const Text(
-              'Velg korttype',
+              Strings.selectInspirationType,
               style: TextStyle(color: Colors.white),
             ),
             ButtonBar(
@@ -86,7 +86,7 @@ class _AddCardPageState extends State<AddCardPage> {
             ),
             cardTemplate.getTemplate(inspiration, editable: true),
             const Text(
-              'Velg når i måneden kortet skal vises',
+              Strings.selectTimeOfMonth,
               style: TextStyle(color: Colors.white),
             ),
             ButtonBar(

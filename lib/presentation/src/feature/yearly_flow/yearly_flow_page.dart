@@ -6,6 +6,7 @@ import 'package:yearly_flow/presentation/src/widgets/card_template.dart';
 import 'package:yearly_flow/domain/src/util/enums/month.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/add_card'
     '/add_card_page.dart';
+import 'package:yearly_flow/presentation/src/core/strings.dart';
 
 class YearlyFlowPage extends StatefulWidget {
   const YearlyFlowPage({Key? key}) : super(key: key);
@@ -106,7 +107,7 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
         ),
         IconButton(
           icon: const Icon(Icons.add),
-          tooltip: 'Legg til kort',
+          tooltip: Strings.hintText_addCard,
           color: Colors.white,
           onPressed: () {
             _addCard(month.month);
@@ -138,12 +139,12 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
     return Scaffold(
       backgroundColor: const Color(0xFF303030),
       appBar: AppBar(
-        title: const Text('Yearly flow'),
+        title: const Text(Strings.app_title),
       ),
       body: _buildMonthList(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.calendar_today),
-        onPressed: scrollToIndex,
+        onPressed: scrollToIndex
       ),
     );
   }

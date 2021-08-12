@@ -1,3 +1,5 @@
+import 'package:yearly_flow/presentation/src/core/strings.dart';
+
 enum TimeOfMonth {
   Any,
   Start,
@@ -8,10 +10,10 @@ enum TimeOfMonth {
 extension TimeOfMonthExtension on TimeOfMonth {
   String get displayTitle {
     switch (this) {
-      case TimeOfMonth.Any: return 'Når som helst';
-      case TimeOfMonth.Start: return 'Begynnelsen';
-      case TimeOfMonth.Middle: return 'Midten';
-      case TimeOfMonth.End: return 'Slutten';
+      case TimeOfMonth.Any: return Strings.timeOfMonth_any;
+      case TimeOfMonth.Start: return Strings.timeOfMonth_start;
+      case TimeOfMonth.Middle: return Strings.timeOfMonth_middle;
+      case TimeOfMonth.End: return Strings.timeOfMonth_end;
     }
   }
 

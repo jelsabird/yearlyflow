@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:yearly_flow/presentation/src/core/strings.dart';
 
 enum Month {
   January,
@@ -20,18 +21,18 @@ extension MonthExtension on Month {
 
   String get displayTitle {
     switch (this) {
-      case Month.January: return 'Januar';
-      case Month.February: return 'Februar';
-      case Month.March: return 'Mars';
-      case Month.April: return 'April';
-      case Month.May: return 'Mai';
-      case Month.June: return 'Juni';
-      case Month.July: return 'Juli';
-      case Month.August: return 'August';
-      case Month.September: return 'September';
-      case Month.October: return 'Oktober';
-      case Month.November: return 'November';
-      case Month.December: return 'Desember';
+      case Month.January: return Strings.month_january;
+      case Month.February: return Strings.month_february;
+      case Month.March: return Strings.month_march;
+      case Month.April: return Strings.month_april;
+      case Month.May: return Strings.month_may;
+      case Month.June: return Strings.month_june;
+      case Month.July: return Strings.month_july;
+      case Month.August: return Strings.month_august;
+      case Month.September: return Strings.month_september;
+      case Month.October: return Strings.month_october;
+      case Month.November: return Strings.month_november;
+      case Month.December: return Strings.month_december;
     }
   }
 
