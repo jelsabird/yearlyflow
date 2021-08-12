@@ -1,0 +1,203 @@
+{
+  "inspirations": [
+    {
+      "inspirationType": "note",
+      "month": 7,
+      "content": {
+        "title": "Sommeridyll",
+        "text": "Gå barbeint, plukke bringebær, ligge i gresset og se på skyene."
+      },
+      "timeOfMonth": "any"
+    },
+    {
+      "inspirationType": "birthday",
+      "month": 5,
+      "content": {
+        "name": "Vilma",
+        "date": "2019-05-10"
+      },
+      "timeOfMonth": "middle"
+    },
+    {
+      "inspirationType": "note",
+      "month": 5,
+      "content": {
+        "title": "Gjøre klar terrassen",
+        "text": "Kjøpe blomster, plante om og gjødsle."
+      },
+      "timeOfMonth": "start"
+    },
+    {
+      "inspirationType": "birthday",
+      "month": 10,
+      "content": {
+        "name": "Oskar",
+        "date": "2020-10-14"
+      },
+      "timeOfMonth": "middle"
+    },
+    {
+      "inspirationType": "birthday",
+      "month": 9,
+      "content": {
+        "name": "Birte",
+        "date": "1988-09-22"
+      },
+      "timeOfMonth": "end"
+    },
+    {
+      "inspirationType": "birthday",
+      "month": 12,
+      "content": {
+        "name": "Martin",
+        "date": "1991-12-14"
+      },
+      "timeOfMonth": "middle"
+    },
+    {
+      "inspirationType": "note",
+      "month": 9,
+      "content": {
+        "title": "Ønskeliste",
+        "text": "Kjøpestopp frem til nyttår. Skriv alt vi ville kjøpt på ønskeliste. Kanskje får vi noe til jul?"
+      },
+      "timeOfMonth": "any"
+    },
+    {
+      "inspirationType": "note",
+      "month": 8,
+      "content": {
+        "title": "Sommersalg",
+        "text": "Kjøp badetøy, sommerklær og ting vi trenger til sommeren neste år."
+      },
+      "timeOfMonth": "start"
+    },
+    {
+      "inspirationType": "note",
+      "month": 5,
+      "content": {
+        "title": "17. mai",
+        "text": "Is i fryseren. Blomster på bordet. Pavlovakake. Inviter noen på frokost eller grilling!"
+      },
+      "timeOfMonth": "middle"
+    },
+    {
+      "inspirationType": "bulletList",
+      "month": 3,
+      "content": {
+        "title": "Så frø",
+        "bulletPoints": [
+          "Oregano",
+          "Basilikum",
+          "Rosmarin",
+          "Persiller",
+          "Sitronmelisse",
+          "Poteter",
+          "Søtpotet",
+          "Gulrøtter",
+          "Squash",
+          "Gresskar",
+          "Reddik",
+          "Vårløk"
+        ]
+      },
+      "timeOfMonth": "start"
+    },
+    {
+      "inspirationType": "note",
+      "month": 3,
+      "content": {
+        "title": "Ferieplaner",
+        "text": "Vi liker å dra på hytta, bade, plukke bær, fiske, dra på sykkeltur eller roadtrip med bil. Sjekk med venner og familie om vi kan lage noen planer sammen. Husk å legge inn egentid for å få den gode feriefølelsen."
+      },
+      "timeOfMonth": "any"
+    },
+    {
+      "inspirationType": "note",
+      "month": 10,
+      "content": {
+        "title": "Regn og vind",
+        "text": "Gjør huset klart for høsten og vinteren. Husk å renske takrenner og rydde bort ting som kan blåse bort ute, skru av vanningssystem og steng utekraner. "
+      },
+      "timeOfMonth": "any"
+    },
+    {
+      "inspirationType": "note",
+      "month": 11,
+      "content": {
+        "title": "Peiskos",
+        "text": "Finn frem det vi trenger for å kose oss foran peisen. Ved og tennbriketter, kakao og chai, tøfler og ullsokker, tepper og saueskinn. Lag irish coffee og prøv ut oppskrifter på andre varme drinker."
+      },
+      "timeOfMonth": "start"
+    },
+    {
+      "inspirationType": "note",
+      "month": 1,
+      "content": {
+        "title": "Lumberjack",
+        "text": "Ta en helg på Jelsa med kapping og kløyving av ved."
+      },
+      "timeOfMonth": "any"
+    },
+    {
+      "inspirationType": "note",
+      "month": 4,
+      "content": {
+        "title": "Vår",
+        "text": "Plutselig en kan du gå uten jakke og lue, og finne frem lette tøysko."
+      },
+      "timeOfMonth": "any"
+    },
+    {
+      "inspirationType": "note",
+      "month": 6,
+      "content": {
+        "title": "Sol og varme",
+        "text": "Lunsj på terrassen. Ta med middagen i parken. Bade i Godalen eller Stokkavatnet. Sov i telt. Inviter noen med på picnic. Ta en utepils. "
+      },
+      "timeOfMonth": "any"
+    },
+    {
+      "inspirationType": "note",
+      "month": 2,
+      "content": {
+        "title": "Rydde i hagen",
+        "text": "Visne stilker og ugress fra i fjor kan ryddes bort for å gi plass til det nye som kommer opp."
+      },
+      "timeOfMonth": "end"
+    },
+    {
+      "inspirationType": "note",
+      "month": 12,
+      "content": {
+        "title": "Jul",
+        "text": "Det fine med jul er lys, peiskos, julemarked, vakre korkonserter og julebad. Inviter på middag på lille julaften og i romjulen. Lag skattejakt med julegodteri."
+      },
+      "timeOfMonth": "middle"
+    },
+    {
+      "inspirationType": "note",
+      "month": 11,
+      "content": {
+        "title": "Julepost",
+        "text": "Send gaver i posten til Kongsberg og Oslo."
+      },
+      "timeOfMonth": "start"
+    },
+    {
+      "inspirationType": "recipe",
+      "month": 10,
+      "content": {
+        "title": "Halsmedisin",
+        "introduction": "Når forkjølelsene begynner å melde seg er det bra å ha en krukke med god hjemmelagd hostemikstur som både lindrer og får det til å gå fort over.",
+        "ingredients": [
+      "Honning",
+          "Sitron",
+          "Ingefær"
+    ],
+        "instructions": "Kutt opp sitron og ingefær i skiver og legg i et glass med lokk. Hell honning over."
+      },
+      "timeOfMonth": "start"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+com/example/yearly_flow/BuildConfig.java
+ com.example.yearly_flow.BuildConfig
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
