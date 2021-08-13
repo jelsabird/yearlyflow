@@ -24,6 +24,6 @@ class Birthday implements InspirationContent {
     );
   }
 
-  final String name;
-  final DateTime date;
+  String name;
+  DateTime date;
 }
