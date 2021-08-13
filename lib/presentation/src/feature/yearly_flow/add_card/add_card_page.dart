@@ -84,7 +84,7 @@ class _AddCardPageState extends State<AddCardPage> {
                 ),
               ],
             ),
-            cardTemplate.getTemplate(inspiration, editable: true),
+            cardTemplate.getTemplate(inspiration, isEditing: true),
             const Text(
               Strings.selectTimeOfMonth,
               style: TextStyle(color: Colors.white),

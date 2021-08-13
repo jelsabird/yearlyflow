@@ -7,7 +7,8 @@ import 'package:yearly_flow/domain/src/entity/note.dart';
 import 'package:yearly_flow/domain/src/entity/recipe.dart';
 import 'package:yearly_flow/domain/src/util/enums/inspiration_type.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
-import 'package:yearly_flow/presentation/src/widgets/date_picker.dart';
+import 'package:yearly_flow/presentation/src/widgets/birthday_card_content.dart';
+import 'package:yearly_flow/presentation/src/widgets/date_text_field.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 
 class CardTemplate {
@@ -19,7 +20,7 @@ class CardTemplate {
     return templateList;
   }
 
-  Widget getTemplate(Inspiration inspiration, {bool editable = false}) {
+  Widget getTemplate(Inspiration inspiration, {bool isEditing = false}) {
     return SizedBox(
       width: double.infinity,
       child: Card(
@@ -28,37 +29,40 @@ class CardTemplate {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: _getContent(inspiration, editable),
+            children: _getContent(inspiration, isEditing),
           ),
         ),
       ),
     );
   }
 
-  List<Widget> _getContent(Inspiration inspiration, bool editable) {
+  List<Widget> _getContent(Inspiration inspiration, bool isEditing) {
     final InspirationContent? _content = inspiration.content;
     if (_content == null) {
       return <Widget>[];
     } else {
       switch (inspiration.inspirationType) {
         case InspirationType.Note:
-          return editable
+          return isEditing
               ? _getEditableNoteContent(_content as Note)
               : _getNoteContent(_content as Note);
         case InspirationType.Birthday:
-          return editable
-              ? _getEditableBirthdayContent(_content as Birthday)
-              : _getBirthdayContent(_content as Birthday);
+          return <Widget>[
+            BirthdayCardContent(
+              birthday: _content as Birthday,
+              isEditing: isEditing,
+            )
+          ];
         case InspirationType.BulletList:
-          return editable
+          return isEditing
               ? _getEditableBulletListContent(_content as BulletList)
               : _getBulletListContent(_content as BulletList);
         case InspirationType.CheckList:
-          return editable
+          return isEditing
               ? _getEditableCheckListContent(_content as CheckList)
               : _getCheckListContent(_content as CheckList);
         case InspirationType.Recipe:
-          return editable
+          return isEditing
               ? _getEditableRecipeContent(_content as Recipe)
               : _getRecipeContent(_content as Recipe);
       }
@@ -117,7 +121,6 @@ class CardTemplate {
   }
 
   List<Widget> _getEditableBirthdayContent(Birthday birthday) {
-
     return <Widget>[
       const TextField(
         decoration: InputDecoration(
@@ -129,7 +132,7 @@ class CardTemplate {
       ),
       const SizedBox(
         height: 400,
-        child: DatePicker(),
+        child: DateTextField(),
       )
     ];
   }
