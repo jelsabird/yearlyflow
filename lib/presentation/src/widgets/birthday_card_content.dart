@@ -35,7 +35,7 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
 
   void _updateBirthday({String? name, DateTime? date}){
     if (name != null){
-      widget.birthday.name = name;
+      widget.birthday.name = name.trim();
     }
     if (date != null){
       widget.birthday.date = date;

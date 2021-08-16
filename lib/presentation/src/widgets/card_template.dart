@@ -10,6 +10,7 @@ import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/presentation/src/widgets/birthday_card_content.dart';
 import 'package:yearly_flow/presentation/src/widgets/date_text_field.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
+import 'package:yearly_flow/presentation/src/widgets/note_card_content.dart';
 
 class CardTemplate {
   List<Widget> getTemplateList(List<Inspiration> inspirations) {
@@ -43,9 +44,12 @@ class CardTemplate {
     } else {
       switch (inspiration.inspirationType) {
         case InspirationType.Note:
-          return isEditing
-              ? _getEditableNoteContent(_content as Note)
-              : _getNoteContent(_content as Note);
+          return <Widget>[
+            NoteCardContent(
+              note: _content as Note,
+              isEditing: isEditing,
+            )
+          ];
         case InspirationType.Birthday:
           return <Widget>[
             BirthdayCardContent(
@@ -67,74 +71,6 @@ class CardTemplate {
               : _getRecipeContent(_content as Recipe);
       }
     }
-  }
-
-  List<Widget> _getNoteContent(Note note) {
-    return <Widget>[
-      Text(
-        note.title,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      const SizedBox(
-        height: 8,
-      ),
-      Text(note.text),
-    ];
-  }
-
-  List<Widget> _getEditableNoteContent(Note note) {
-    return <Widget>[
-      const TextField(
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        decoration: InputDecoration(
-          hintText: Strings.cardContent_title,
-          hintStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      const SizedBox(
-        height: 8,
-      ),
-      TextField(
-        decoration: InputDecoration(
-          hintText: Strings.cardContent_text,
-        ),
-      ),
-    ];
-  }
-
-  List<Widget> _getBirthdayContent(Birthday birthday) {
-    final int age = DateTime.now().year - birthday.date.year;
-    return <Widget>[
-      Text(
-        '${birthday.name} fyller $age år den ${birthday.date.day.toString()}.${birthday.date.month.toString()}.',
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ];
-  }
-
-  List<Widget> _getEditableBirthdayContent(Birthday birthday) {
-    return <Widget>[
-      const TextField(
-        decoration: InputDecoration(
-          hintText: Strings.birthday_name,
-        ),
-      ),
-      const SizedBox(
-        height: 8,
-      ),
-      const SizedBox(
-        height: 400,
-        child: DateTextField(),
-      )
-    ];
   }
 
   List<Widget> _getBulletListContent(BulletList bulletList) {
