@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/bullet_list.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
+import 'package:yearly_flow/presentation/src/util/bullet_list_helper.dart';
 
 class BulletListCardContent extends StatefulWidget {
   const BulletListCardContent({
     Key? key,
     required this.bulletList,
     this.isEditing = false,
-}) : super(key: key);
+  }) : super(key: key);
 
   final BulletList bulletList;
   final bool isEditing;
@@ -19,23 +20,18 @@ class BulletListCardContent extends StatefulWidget {
 }
 
 class _BulletListCardContentState extends State<BulletListCardContent> {
-  void _updateBulletList({String? title, List<String>? bulletPoints}){
-    if(title != null){
+  void _updateBulletList({String? title, List<String>? bulletPoints}) {
+    if (title != null) {
       widget.bulletList.title = title.trim();
     }
-    if(bulletPoints != null){
+    if (bulletPoints != null) {
       widget.bulletList.bulletPoints = bulletPoints;
     }
-  }
-  
-  List<String> _convertToList(String text){
-    LineSplitter lineSplitter = new LineSplitter();
-    return lineSplitter.convert(text.trim());
   }
 
   @override
   Widget build(BuildContext context) {
-    if(widget.isEditing){
+    if (widget.isEditing) {
       return Column(
         children: [
           TextField(
@@ -60,7 +56,9 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
           TextField(
             onChanged: (String editedList) {
               setState(() {
-                _updateBulletList(bulletPoints: _convertToList(editedList));
+                _updateBulletList(
+                    bulletPoints:
+                        BulletListHelper.convertTextToList(editedList));
               });
             },
             minLines: 5,
@@ -71,8 +69,7 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
           ),
         ],
       );
-    }
-    else{
+    } else {
       return Column(
         children: [
           Text(
