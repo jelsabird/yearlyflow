@@ -1,4 +1,0 @@
-#Thu Aug 05 20:17:43 CEST 2021
-base.0=/Users/birtejelsa/Development/devtools/flutter/yearly_flow/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

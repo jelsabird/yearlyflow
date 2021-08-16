@@ -8,6 +8,7 @@ import 'package:yearly_flow/domain/src/entity/recipe.dart';
 import 'package:yearly_flow/domain/src/util/enums/inspiration_type.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/presentation/src/widgets/birthday_card_content.dart';
+import 'package:yearly_flow/presentation/src/widgets/bullet_list_card_content.dart';
 import 'package:yearly_flow/presentation/src/widgets/date_text_field.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 import 'package:yearly_flow/presentation/src/widgets/note_card_content.dart';
@@ -58,9 +59,12 @@ class CardTemplate {
             )
           ];
         case InspirationType.BulletList:
-          return isEditing
-              ? _getEditableBulletListContent(_content as BulletList)
-              : _getBulletListContent(_content as BulletList);
+          return <Widget>[
+            BulletListCardContent(
+              bulletList: _content as BulletList,
+              isEditing:  isEditing,
+            )
+          ];
         case InspirationType.CheckList:
           return isEditing
               ? _getEditableCheckListContent(_content as CheckList)
@@ -71,47 +75,6 @@ class CardTemplate {
               : _getRecipeContent(_content as Recipe);
       }
     }
-  }
-
-  List<Widget> _getBulletListContent(BulletList bulletList) {
-    return <Widget>[
-      Text(
-        bulletList.title,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      const SizedBox(
-        height: 8,
-      ),
-      Column(children: _getTextRows(bulletList.bulletPoints)),
-    ];
-  }
-
-  List<Widget> _getEditableBulletListContent(BulletList bulletList) {
-    return <Widget>[
-      const TextField(
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        decoration: InputDecoration(
-          hintText: Strings.cardContent_title,
-          hintStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      const SizedBox(
-        height: 8,
-      ),
-      TextField(
-        minLines: 5,
-        maxLines: 20,
-        decoration: InputDecoration(
-          hintText: Strings.inspirationType_bulletList,
-        ),
-      ),
-    ];
   }
 
   List<Widget> _getTextRows(List<String> textList) {
