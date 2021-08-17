@@ -10,6 +10,7 @@ import 'package:yearly_flow/domain/src/entity/recipe.dart';
 import 'package:yearly_flow/domain/src/util/enums/inspiration_type.dart';
 import 'package:yearly_flow/domain/src/util/enums/month.dart';
 import 'package:yearly_flow/domain/src/util/enums/time_of_month.dart';
+import 'package:yearly_flow/presentation/src/core/app_color_scheme.dart';
 import 'package:yearly_flow/presentation/src/widgets/card_template.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 
@@ -38,91 +39,90 @@ class _AddCardPageState extends State<AddCardPage> {
     final CardTemplate cardTemplate = CardTemplate();
 
     return Scaffold(
-        backgroundColor: const Color(0xFF303030),
-        appBar: AppBar(
-          title: Text(Strings.addCard_pageTitle,
-            style: const TextStyle(color: Colors.white, height: 40),
-          ),
+      appBar: AppBar(
+        title: Text(
+          Strings.addCard_pageTitle,
         ),
-        body: Column(
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
           children: <Widget>[
+            Text(
+              Strings.selectTimeOfMonth,
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            ButtonBar(
+              children: <Widget>[
+                TextButton(
+                  onPressed: () => _setTimeOfMonth(TimeOfMonth.Start),
+                  child: Text(TimeOfMonth.Start.displayTitle),
+                  style: _selectedStyle(isSelectedTime(TimeOfMonth.Start)),
+                ),
+                TextButton(
+                  onPressed: () => _setTimeOfMonth(TimeOfMonth.Middle),
+                  child: Text(TimeOfMonth.Middle.displayTitle),
+                  style: _selectedStyle(isSelectedTime(TimeOfMonth.Middle)),
+                ),
+                TextButton(
+                  onPressed: () => _setTimeOfMonth(TimeOfMonth.End),
+                  child: Text(TimeOfMonth.End.displayTitle),
+                  style: _selectedStyle(isSelectedTime(TimeOfMonth.End)),
+                ),
+                TextButton(
+                  onPressed: () => _setTimeOfMonth(TimeOfMonth.Any),
+                  child: Text(TimeOfMonth.Any.displayTitle),
+                  style: _selectedStyle(isSelectedTime(TimeOfMonth.Any)),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
             const Text(
               Strings.selectInspirationType,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             ButtonBar(
               children: <Widget>[
                 TextButton(
                   onPressed: () =>
                       _setInspirationType(InspirationType.Note, Note()),
-                  child: Text(InspirationType.Note.displayTitle,
-                      style: _getSelectedTypeStyle(InspirationType.Note)),
+                  child: Text(InspirationType.Note.displayTitle),
+                  style: _selectedStyle(isSelectedType(InspirationType.Note)),
                 ),
                 TextButton(
                   onPressed: () => _setInspirationType(
                       InspirationType.BulletList, BulletList('', <String>[])),
-                  child: Text(InspirationType.BulletList.displayTitle,
-                      style: _getSelectedTypeStyle(InspirationType.BulletList)),
+                  child: Text(InspirationType.BulletList.displayTitle),
+                  style: _selectedStyle(
+                      isSelectedType(InspirationType.BulletList)),
                 ),
                 TextButton(
                   onPressed: () => _setInspirationType(
                       InspirationType.CheckList, CheckList()),
-                  child: Text(InspirationType.CheckList.displayTitle,
-                      style: _getSelectedTypeStyle(InspirationType.CheckList)),
+                  child: Text(InspirationType.CheckList.displayTitle),
+                  style:
+                      _selectedStyle(isSelectedType(InspirationType.CheckList)),
                 ),
                 TextButton(
                   onPressed: () => _setInspirationType(
                       InspirationType.Recipe, Recipe('', <String>[], '')),
-                  child: Text(InspirationType.Recipe.displayTitle,
-                      style: _getSelectedTypeStyle(InspirationType.Recipe)),
+                  child: Text(InspirationType.Recipe.displayTitle),
+                  style: _selectedStyle(isSelectedType(InspirationType.Recipe)),
                 ),
                 TextButton(
                   onPressed: () => _setInspirationType(
                       InspirationType.Birthday, Birthday('', DateTime.now())),
-                  child: Text(InspirationType.Birthday.displayTitle,
-                      style: _getSelectedTypeStyle(InspirationType.Birthday)),
+                  child: Text(InspirationType.Birthday.displayTitle),
+                  style:
+                      _selectedStyle(isSelectedType(InspirationType.Birthday)),
                 ),
               ],
             ),
             cardTemplate.getTemplate(inspiration, isEditing: true),
-            const Text(
-              Strings.selectTimeOfMonth,
-              style: TextStyle(color: Colors.white),
-            ),
-            ButtonBar(
-              children: <Widget>[
-                TextButton(
-                  onPressed: () => _setTimeOfMonth(TimeOfMonth.Any),
-                  child: Text(
-                    TimeOfMonth.Any.displayTitle,
-                    style: _getSelectedTimeStyle(TimeOfMonth.Any),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => _setTimeOfMonth(TimeOfMonth.Start),
-                  child: Text(
-                    TimeOfMonth.Start.displayTitle,
-                    style: _getSelectedTimeStyle(TimeOfMonth.Start),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => _setTimeOfMonth(TimeOfMonth.Middle),
-                  child: Text(
-                    TimeOfMonth.Middle.displayTitle,
-                    style: _getSelectedTimeStyle(TimeOfMonth.Middle),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => _setTimeOfMonth(TimeOfMonth.End),
-                  child: Text(
-                    TimeOfMonth.End.displayTitle,
-                    style: _getSelectedTimeStyle(TimeOfMonth.End),
-                  ),
-                )
-              ],
-            )
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   void _setInspirationType(
@@ -133,19 +133,19 @@ class _AddCardPageState extends State<AddCardPage> {
     });
   }
 
-  TextStyle? _getSelectedTypeStyle(InspirationType thisType) {
-    if (inspiration.inspirationType == thisType) {
-      return const TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
-    } else {
-      return null;
-    }
+  bool isSelectedType(InspirationType thisType) {
+    return inspiration.inspirationType == thisType;
   }
 
-  TextStyle? _getSelectedTimeStyle(TimeOfMonth thisTime) {
-    if (inspiration.timeOfMonth == thisTime) {
-      return const TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
+  bool isSelectedTime(TimeOfMonth thisTime) {
+    return inspiration.timeOfMonth == thisTime;
+  }
+
+  ButtonStyle _selectedStyle(bool isSelected) {
+    if (isSelected) {
+      return TextButton.styleFrom(primary: AppColorScheme.accent);
     } else {
-      return null;
+      return TextButton.styleFrom(primary: AppColorScheme.primary);
     }
   }
 

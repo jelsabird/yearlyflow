@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/yearly_flow_page.dart';
+import 'package:yearly_flow/presentation/src/core/styles.dart';
 
 void main() {
   runApp(const App());
@@ -13,9 +14,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Yearly flow',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
+      theme: ThemeDataConfig.configure(),
       home: const YearlyFlowPage(),
     );
   }

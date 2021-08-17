@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/birthday.dart';
+import 'package:yearly_flow/presentation/src/core/styles.dart';
 import 'package:yearly_flow/presentation/src/widgets/date_text_field.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 
@@ -51,12 +52,6 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
     if (widget.isEditing) {
       return Column(
         children: [
-          Text(
-            '${widget.birthday.name} fyller $age år den ${widget.birthday.date.day
-                .toString()}.${widget.birthday.date.month.toString()}.',
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),),
           TextField(
             onChanged: (String editedName) {
               setState(() {
@@ -64,8 +59,10 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
               });
             },
             autofocus: true,
+            style: Styles.cardTitleStyle,
             decoration: InputDecoration(
               hintText: Strings.birthday_name,
+              hintStyle: Styles.cardTitleStyle
             ),
           ),
           const SizedBox(
@@ -77,7 +74,7 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
               onChanged: (DateTime pickedDate) {
                 setState(() {
                   _updateBirthday(date: pickedDate);
-                });
+                },);
               },
             ),
           )
@@ -88,9 +85,8 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
       return Text(
         '${widget.birthday.name} fyller $age år den ${widget.birthday.date.day
             .toString()}.${widget.birthday.date.month.toString()}.',
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),);
+        style: Styles.cardTitleStyle
+        ,);
     }
   }
 }

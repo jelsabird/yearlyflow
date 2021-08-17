@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/bullet_list.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
+import 'package:yearly_flow/presentation/src/core/styles.dart';
 import 'package:yearly_flow/presentation/src/util/bullet_list_helper.dart';
 
 class BulletListCardContent extends StatefulWidget {
@@ -40,14 +39,10 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
                 _updateBulletList(title: editedTitle);
               });
             },
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Styles.cardTitleStyle,
             decoration: InputDecoration(
               hintText: Strings.cardContent_title,
-              hintStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              hintStyle: Styles.cardTitleStyle,
             ),
           ),
           const SizedBox(
@@ -63,8 +58,10 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
             },
             minLines: 5,
             maxLines: 20,
+            style: Styles.cardBodyStyle,
             decoration: InputDecoration(
               hintText: Strings.inspirationType_bulletList,
+              hintStyle: Styles.cardBodyStyle,
             ),
           ),
         ],
@@ -74,27 +71,15 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
         children: [
           Text(
             widget.bulletList.title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Styles.cardTitleStyle,
           ),
           const SizedBox(
             height: 8,
           ),
-          Column(children: _getTextRows(widget.bulletList.bulletPoints)),
+          Column(children: BulletListHelper.getTextRows(widget.bulletList
+          .bulletPoints)),
         ],
       );
     }
-  }
-
-  List<Widget> _getTextRows(List<String> textList) {
-    final List<Widget> rows = <Widget>[];
-    for (final String text in textList) {
-      rows.add(Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [Text("• "), Expanded(child: Text(text))],
-      ));
-    }
-    return rows;
   }
 }
