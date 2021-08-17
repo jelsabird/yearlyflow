@@ -45,4 +45,9 @@ class Styles {
   static const TextStyle cardBodyStyle = TextStyle(
     fontSize: 14.0,
   );
+
+  static const TextStyle monthHeaderStyle = TextStyle(
+    fontSize: 20.0,
+    color: AppColorScheme.accent
+  );
 }
