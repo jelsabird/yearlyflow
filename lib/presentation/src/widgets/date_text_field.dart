@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
+import 'package:yearly_flow/presentation/src/core/styles.dart';
 
 class DateTextField extends StatefulWidget {
   const DateTextField({
@@ -27,10 +28,12 @@ class _DateTextFieldState extends State<DateTextField> {
     final DateFormat formatter = DateFormat('dd.MM.yyyy');
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Center(
           child: TextField(
         readOnly: true,
         controller: _dateController,
+        style: Styles.cardBodyStyle,
         decoration: const InputDecoration(
           hintText: Strings.birthday_date,
         ),

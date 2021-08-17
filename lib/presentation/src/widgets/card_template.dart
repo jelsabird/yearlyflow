@@ -27,51 +27,46 @@ class CardTemplate {
         color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: _getContent(inspiration, isEditing),
-          ),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            _getContent(inspiration, isEditing),
+            SizedBox(height: 16,)
+          ]),
         ),
       ),
     );
   }
 
-  List<Widget> _getContent(Inspiration inspiration, bool isEditing) {
+  Widget _getContent(Inspiration inspiration, bool isEditing) {
     final InspirationContent? _content = inspiration.content;
     if (_content == null) {
-      return <Widget>[];
+      return SizedBox(height: 40);
     } else {
       switch (inspiration.inspirationType) {
         case InspirationType.Note:
-          return <Widget>[
-            NoteCardContent(
-              note: _content as Note,
-              isEditing: isEditing,
-            )
-          ];
+          return NoteCardContent(
+            note: _content as Note,
+            isEditing: isEditing,
+          );
         case InspirationType.Birthday:
-          return <Widget>[
-            BirthdayCardContent(
-              birthday: _content as Birthday,
-              isEditing: isEditing,
-            )
-          ];
+          return BirthdayCardContent(
+            birthday: _content as Birthday,
+            isEditing: isEditing,
+          );
         case InspirationType.BulletList:
-          return <Widget>[
-            BulletListCardContent(
-              bulletList: _content as BulletList,
-              isEditing: isEditing,
-            )
-          ];
+          return BulletListCardContent(
+            bulletList: _content as BulletList,
+            isEditing: isEditing,
+          );
         case InspirationType.CheckList:
-          return <Widget>[];
+          return SizedBox(
+            height: 40,
+            child: Text('(Not implemented)'),
+          );
         case InspirationType.Recipe:
-          return <Widget>[
-            RecipeCardContent(
-              recipe: _content as Recipe,
-              isEditing: isEditing,
-            )
-          ];
+          return RecipeCardContent(
+            recipe: _content as Recipe,
+            isEditing: isEditing,
+          );
       }
     }
   }

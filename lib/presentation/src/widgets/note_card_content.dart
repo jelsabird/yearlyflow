@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/note.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
+import 'package:yearly_flow/presentation/src/core/styles.dart';
 
 class NoteCardContent extends StatefulWidget {
   const NoteCardContent({
@@ -45,20 +46,6 @@ class _NoteCardContentState extends State<NoteCardContent> {
     if (widget.isEditing) {
       return Column(
         children: <Widget>[
-          Text(
-            widget.note.title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            widget.note.text,
-            textAlign: TextAlign.center,
-          ),
           TextField(
             onChanged: (String editedTitle) {
               setState(() {
@@ -66,14 +53,10 @@ class _NoteCardContentState extends State<NoteCardContent> {
               });
             },
             autofocus: true,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Styles.cardTitleStyle,
             decoration: InputDecoration(
               hintText: Strings.cardContent_title,
-              hintStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              hintStyle: Styles.cardTitleStyle,
             ),
           ),
           const SizedBox(
@@ -87,9 +70,10 @@ class _NoteCardContentState extends State<NoteCardContent> {
             },
             minLines: 5,
             maxLines: 10,
+            style: Styles.cardBodyStyle,
             decoration: InputDecoration(
-              hintText: Strings.cardContent_text,
-            ),
+                hintText: Strings.cardContent_text,
+                hintStyle: Styles.cardBodyStyle),
           ),
         ],
       );
@@ -98,14 +82,15 @@ class _NoteCardContentState extends State<NoteCardContent> {
         children: <Widget>[
           Text(
             widget.note.title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Styles.cardTitleStyle,
           ),
           const SizedBox(
             height: 8,
           ),
-          Text(widget.note.text),
+          Text(
+            widget.note.text,
+            style: Styles.cardBodyStyle,
+          ),
         ],
       );
     }

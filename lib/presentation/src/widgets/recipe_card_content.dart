@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/recipe.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
+import 'package:yearly_flow/presentation/src/core/styles.dart';
 import 'package:yearly_flow/presentation/src/util/bullet_list_helper.dart';
 
 class RecipeCardContent extends StatefulWidget {
@@ -36,17 +35,6 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
     }
   }
 
-  List<Widget> _getTextRows(List<String> textList) {
-    final List<Widget> rows = <Widget>[];
-    for (final String text in textList) {
-      rows.add(Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [Text("• "), Expanded(child: Text(text))],
-      ));
-    }
-    return rows;
-  }
-
   @override
   Widget build(BuildContext context) {
     if (widget.isEditing) {
@@ -58,14 +46,10 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
                 _updateRecipe(title: editedTitle);
               });
             },
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Styles.cardTitleStyle,
             decoration: InputDecoration(
               hintText: Strings.cardContent_title,
-              hintStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              hintStyle: Styles.cardTitleStyle,
             ),
           ),
           const SizedBox(
@@ -79,8 +63,10 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
             },
             minLines: 1,
             maxLines: 5,
+            style: Styles.cardBodyStyle,
             decoration: InputDecoration(
               hintText: Strings.recipe_introduction,
+              hintStyle: Styles.cardBodyStyle
             ),
           ),
           const SizedBox(
@@ -95,8 +81,10 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
             },
             minLines: 5,
             maxLines: 20,
+            style: Styles.cardBodyStyle,
             decoration: InputDecoration(
               hintText: Strings.recipe_ingredients,
+              hintStyle: Styles.cardBodyStyle
             ),
           ),
           const SizedBox(
@@ -110,8 +98,10 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
             },
             minLines: 1,
             maxLines: 20,
+            style: Styles.cardBodyStyle,
             decoration: InputDecoration(
               hintText: Strings.recipe_instructions,
+              hintStyle: Styles.cardBodyStyle
             ),
           ),
         ],
@@ -122,22 +112,21 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
         children: [
           Text(
             widget.recipe.title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Styles.cardTitleStyle,
           ),
           const SizedBox(
             height: 8,
           ),
-          Text(widget.recipe.introduction),
+          Text(widget.recipe.introduction, style: Styles.cardBodyStyle,),
           const SizedBox(
             height: 8,
           ),
-          Column(children: _getTextRows(widget.recipe.ingredients)),
+          Column(children: BulletListHelper.getTextRows(widget.recipe
+              .ingredients)),
           const SizedBox(
             height: 8,
           ),
-          Text(widget.recipe.instructions),
+          Text(widget.recipe.instructions, style: Styles.cardBodyStyle,),
         ],
       );
     }
