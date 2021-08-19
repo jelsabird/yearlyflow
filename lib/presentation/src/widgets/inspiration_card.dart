@@ -20,8 +20,11 @@ class _InspirationCardState extends State<InspirationCard> {
       color: Colors.white,
       child: InkWell(
         onTap: widget.onTap,
-        child: CardContent(widget.inspiration, isEditing: widget.isEditing,)
-      )
+        child: CardContent(
+          widget.inspiration,
+          isEditing: widget.isEditing,
+        ),
+      ),
     );
   }
 }

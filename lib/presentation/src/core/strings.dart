@@ -1,7 +1,8 @@
 class Strings {
   static const String app_title = "Yearly flow";
   static const String hintText_addCard = "Legg til kort";
-  static const String addCard_pageTitle = 'Legg til inspirasjonskort';
+  static const String pageTitle_addCard = 'Legg til inspirasjonskort';
+  static const String pageTitle_viewCard = 'Kortvisning';
 
   static const String month_january = "Januar";
   static const String month_february = "Februar";
