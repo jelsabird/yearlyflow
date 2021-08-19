@@ -33,6 +33,36 @@ class _AddCardPageState extends State<AddCardPage> {
     super.initState();
   }
 
+  void _setInspirationType(
+      InspirationType newType, InspirationContent newContent) {
+    setState(() {
+      inspiration.inspirationType = newType;
+      inspiration.content = newContent;
+    });
+  }
+
+  void _setTimeOfMonth(TimeOfMonth newTimeOfMonth) {
+    setState(() {
+      inspiration.timeOfMonth = newTimeOfMonth;
+    });
+  }
+
+  bool isSelectedType(InspirationType thisType) {
+    return inspiration.inspirationType == thisType;
+  }
+
+  bool isSelectedTime(TimeOfMonth thisTime) {
+    return inspiration.timeOfMonth == thisTime;
+  }
+
+  ButtonStyle _selectedStyle(bool isSelected) {
+    if (isSelected) {
+      return TextButton.styleFrom(primary: AppColorScheme.accent);
+    } else {
+      return TextButton.styleFrom(primary: AppColorScheme.primary);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     inspiration.month = ModalRoute.of(context)!.settings.arguments as Month;
@@ -40,7 +70,7 @@ class _AddCardPageState extends State<AddCardPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Strings.addCard_pageTitle,
+          Strings.pageTitle_addCard,
         ),
       ),
       body: Padding(
@@ -122,35 +152,5 @@ class _AddCardPageState extends State<AddCardPage> {
         ),
       ),
     );
-  }
-
-  void _setInspirationType(
-      InspirationType newType, InspirationContent newContent) {
-    setState(() {
-      inspiration.inspirationType = newType;
-      inspiration.content = newContent;
-    });
-  }
-
-  bool isSelectedType(InspirationType thisType) {
-    return inspiration.inspirationType == thisType;
-  }
-
-  bool isSelectedTime(TimeOfMonth thisTime) {
-    return inspiration.timeOfMonth == thisTime;
-  }
-
-  ButtonStyle _selectedStyle(bool isSelected) {
-    if (isSelected) {
-      return TextButton.styleFrom(primary: AppColorScheme.accent);
-    } else {
-      return TextButton.styleFrom(primary: AppColorScheme.primary);
-    }
-  }
-
-  void _setTimeOfMonth(TimeOfMonth newTimeOfMonth) {
-    setState(() {
-      inspiration.timeOfMonth = newTimeOfMonth;
-    });
   }
 }
