@@ -67,19 +67,11 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
         ],
       );
     } else {
-      return Column(
-        children: [
-          Text(
-            widget.bulletList.title,
-            style: Styles.cardTitleStyle,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Column(children: BulletListHelper.getTextRows(widget.bulletList
-          .bulletPoints)),
-        ],
-      );
+      return Text(BulletListHelper.formatStringFromList(widget.bulletList.bulletPoints),
+              overflow: TextOverflow.fade,);
+          /*Column(
+              children: BulletListHelper.getTextRows(
+                  widget.bulletList.bulletPoints)),*/
     }
   }
 }

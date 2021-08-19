@@ -17,6 +17,8 @@ class Note implements InspirationContent {
     );
   }
 
+  String getTitle() => title;
+
   String title;
   String text;
 }

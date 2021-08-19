@@ -78,20 +78,10 @@ class _NoteCardContentState extends State<NoteCardContent> {
         ],
       );
     } else {
-      return Column(
-        children: <Widget>[
-          Text(
-            widget.note.title,
-            style: Styles.cardTitleStyle,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            widget.note.text,
-            style: Styles.cardBodyStyle,
-          ),
-        ],
+      return Text(
+          widget.note.text,
+          overflow: TextOverflow.fade,
+          style: Styles.cardBodyStyle,
       );
     }
   }

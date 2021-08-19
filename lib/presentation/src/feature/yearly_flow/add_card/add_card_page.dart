@@ -11,8 +11,8 @@ import 'package:yearly_flow/domain/src/util/enums/inspiration_type.dart';
 import 'package:yearly_flow/domain/src/util/enums/month.dart';
 import 'package:yearly_flow/domain/src/util/enums/time_of_month.dart';
 import 'package:yearly_flow/presentation/src/core/app_color_scheme.dart';
-import 'package:yearly_flow/presentation/src/widgets/card_template.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
+import 'package:yearly_flow/presentation/src/widgets/inspiration_card.dart';
 
 class AddCardPage extends StatefulWidget {
   const AddCardPage({Key? key}) : super(key: key);
@@ -36,7 +36,6 @@ class _AddCardPageState extends State<AddCardPage> {
   @override
   Widget build(BuildContext context) {
     inspiration.month = ModalRoute.of(context)!.settings.arguments as Month;
-    final CardTemplate cardTemplate = CardTemplate();
 
     return Scaffold(
       appBar: AppBar(
@@ -118,7 +117,7 @@ class _AddCardPageState extends State<AddCardPage> {
                 ),
               ],
             ),
-            cardTemplate.getTemplate(inspiration, isEditing: true),
+            InspirationCard(inspiration, isEditing: true),
           ],
         ),
       ),

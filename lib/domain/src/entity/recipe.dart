@@ -19,6 +19,8 @@ class Recipe implements InspirationContent {
         introduction: parsedIntroduction ?? '');
   }
 
+  String getTitle() => title;
+
   String title = '';
   String introduction = '';
   List<String> ingredients = <String>[];
