@@ -18,17 +18,20 @@ class NoteCardContent extends StatefulWidget {
 }
 
 class _NoteCardContentState extends State<NoteCardContent> {
-  late TextEditingController _textEditingController;
+  late TextEditingController _titleController;
+  late TextEditingController _textController;
 
   @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController();
+    _titleController = TextEditingController(text: widget.note.title);
+    _textController = TextEditingController(text: widget.note.text);
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _titleController.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
@@ -47,6 +50,7 @@ class _NoteCardContentState extends State<NoteCardContent> {
       return Column(
         children: <Widget>[
           TextField(
+            controller: _titleController,
             onChanged: (String editedTitle) {
               setState(() {
                 _updateNote(title: editedTitle);
@@ -63,13 +67,14 @@ class _NoteCardContentState extends State<NoteCardContent> {
             height: 8,
           ),
           TextField(
+            controller: _textController,
             onChanged: (String editedText) {
               setState(() {
                 _updateNote(text: editedText);
               });
             },
-            minLines: 5,
-            maxLines: 10,
+            minLines: 1,
+            maxLines: 20,
             style: Styles.cardBodyStyle,
             decoration: InputDecoration(
                 hintText: Strings.cardContent_text,

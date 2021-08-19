@@ -19,6 +19,32 @@ class RecipeCardContent extends StatefulWidget {
 }
 
 class _RecipeCardContentState extends State<RecipeCardContent> {
+late TextEditingController _titleController;
+late TextEditingController _introductionController;
+late TextEditingController _ingredientsController;
+late TextEditingController _instructionsController;
+
+  @override
+  void initState(){
+    super.initState();
+    _titleController = TextEditingController(text: widget.recipe.title);
+    _introductionController = TextEditingController(text: widget.recipe
+        .introduction);
+    _ingredientsController = TextEditingController(text: BulletListHelper.convertListToText(widget.recipe
+        .ingredients));
+_instructionsController = TextEditingController(text: widget.recipe
+    .instructions);
+  }
+
+  @override
+  void dispose(){
+    _titleController.dispose();
+    _introductionController.dispose();
+    _ingredientsController.dispose();
+    _instructionsController.dispose();
+    super.dispose();
+  }
+
   void _updateRecipe(
       {String? title,
       String? introduction,
@@ -44,6 +70,7 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
       return Column(
         children: [
           TextField(
+            controller: _titleController,
             onChanged: (String editedTitle) {
               setState(() {
                 _updateRecipe(title: editedTitle);
@@ -59,13 +86,14 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
             height: 8,
           ),
           TextField(
+            controller: _introductionController,
             onChanged: (String editedIntroduction) {
               setState(() {
                 _updateRecipe(introduction: editedIntroduction);
               });
             },
             minLines: 1,
-            maxLines: 5,
+            maxLines: 20,
             style: Styles.cardBodyStyle,
             decoration: InputDecoration(
                 hintText: Strings.recipe_introduction,
@@ -75,6 +103,7 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
             height: 8,
           ),
           TextField(
+            controller: _ingredientsController,
             onChanged: (String editedIngredients) {
               setState(() {
                 _updateRecipe(
@@ -82,7 +111,7 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
                         BulletListHelper.convertTextToList(editedIngredients));
               });
             },
-            minLines: 5,
+            minLines: 1,
             maxLines: 20,
             style: Styles.cardBodyStyle,
             decoration: InputDecoration(
@@ -93,6 +122,7 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
             height: 8,
           ),
           TextField(
+            controller: _instructionsController,
             onChanged: (String editedInstructions) {
               setState(() {
                 _updateRecipe(instructions: editedInstructions);

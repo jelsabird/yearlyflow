@@ -19,18 +19,18 @@ class BirthdayCardContent extends StatefulWidget {
 }
 
 class _BirthdayCardContentState extends State<BirthdayCardContent> {
-  late TextEditingController _textEditingController;
+  late TextEditingController _nameController;
   late int age;
 
   @override
   void initState(){
     super.initState();
-    _textEditingController = TextEditingController();
+    _nameController = TextEditingController(text: widget.birthday.name);
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -50,6 +50,7 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
       return Column(
         children: [
           TextField(
+            controller: _nameController,
             onChanged: (String editedName) {
               setState(() {
                 _updateBirthday(name: editedName);
@@ -68,6 +69,7 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
           SizedBox(
             height: 40,
             child: DateTextField(
+              initialDate: widget.birthday.date,
               onChanged: (DateTime pickedDate) {
                 setState(() {
                   _updateBirthday(date: pickedDate);

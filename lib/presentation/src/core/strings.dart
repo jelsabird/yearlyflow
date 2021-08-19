@@ -3,6 +3,7 @@ class Strings {
   static const String hintText_addCard = "Legg til kort";
   static const String pageTitle_addCard = 'Legg til inspirasjonskort';
   static const String pageTitle_viewCard = 'Kortvisning';
+  static const String pageTitle_editCard = 'Endre kort';
 
   static const String month_january = "Januar";
   static const String month_february = "Februar";
@@ -27,10 +28,15 @@ class Strings {
   static const String timeOfMonth_start = "Begynnelsen";
   static const String timeOfMonth_middle = "Midten";
   static const String timeOfMonth_end = "Slutten";
+  static const String timeOfMonthString_any = "når som helst i";
+  static const String timeOfMonthString_start = "i begynnelsen av";
+  static const String timeOfMonthString_middle = "i midten av";
+  static const String timeOfMonthString_end = "i slutten av";
 
   static const String selectInspirationType = "Velg korttype";
   static const String selectTimeOfMonth = "Velg når i måneden kortet skal "
       "vises";
+  static const String editMonthAndTime = "Kortet vises ";
   static const String cardContent_title = "Overskrift";
   static const String cardContent_text = "Tekst til inspirasjon";
   static const String recipe_introduction = "Intro";

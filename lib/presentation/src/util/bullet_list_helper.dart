@@ -3,7 +3,18 @@ import 'dart:convert';
 class BulletListHelper {
   static convertTextToList(String text) {
     LineSplitter lineSplitter = LineSplitter();
+
     return lineSplitter.convert(text.trim());
+  }
+
+  static convertListToText(List<String> list) {
+    StringBuffer buffer = StringBuffer();
+    for (String line in list) {
+      buffer.write(line);
+      buffer.writeln();
+    }
+
+    return buffer.toString();
   }
 
   static String formatStringFromString(String text) {
