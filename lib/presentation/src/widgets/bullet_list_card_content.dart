@@ -19,6 +19,25 @@ class BulletListCardContent extends StatefulWidget {
 }
 
 class _BulletListCardContentState extends State<BulletListCardContent> {
+  late TextEditingController _titleController;
+  late TextEditingController _bulletListController;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.bulletList.title);
+    _bulletListController = TextEditingController(
+        text:
+            BulletListHelper.convertListToText(widget.bulletList.bulletPoints));
+  }
+
+  @override
+  void dispose(){
+    _titleController.dispose();
+    _bulletListController.dispose();
+    super.dispose();
+  }
+
   void _updateBulletList({String? title, List<String>? bulletPoints}) {
     if (title != null) {
       widget.bulletList.title = title.trim();
@@ -34,6 +53,7 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
       return Column(
         children: [
           TextField(
+            controller: _titleController,
             onChanged: (String editedTitle) {
               setState(() {
                 _updateBulletList(title: editedTitle);
@@ -49,6 +69,7 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
             height: 8,
           ),
           TextField(
+            controller: _bulletListController,
             onChanged: (String editedList) {
               setState(() {
                 _updateBulletList(
@@ -67,9 +88,11 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
         ],
       );
     } else {
-      return Text(BulletListHelper.formatStringFromList(widget.bulletList.bulletPoints),
-              overflow: TextOverflow.fade,);
-          /*Column(
+      return Text(
+        BulletListHelper.formatStringFromList(widget.bulletList.bulletPoints),
+        overflow: TextOverflow.fade,
+      );
+      /*Column(
               children: BulletListHelper.getTextRows(
                   widget.bulletList.bulletPoints)),*/
     }

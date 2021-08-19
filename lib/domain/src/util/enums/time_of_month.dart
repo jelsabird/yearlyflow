@@ -17,6 +17,15 @@ extension TimeOfMonthExtension on TimeOfMonth {
     }
   }
 
+  String get displayString {
+    switch (this) {
+      case TimeOfMonth.Any: return Strings.timeOfMonthString_any;
+      case TimeOfMonth.Start: return Strings.timeOfMonthString_start;
+      case TimeOfMonth.Middle: return Strings.timeOfMonthString_middle;
+      case TimeOfMonth.End: return Strings.timeOfMonthString_end;
+    }
+  }
+
   static TimeOfMonth fromRaw(String? raw) {
     switch (raw) {
       case 'any': return TimeOfMonth.Any;
