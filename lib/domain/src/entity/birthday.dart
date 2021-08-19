@@ -26,4 +26,10 @@ class Birthday implements InspirationContent {
 
   String name;
   DateTime date;
+
+  String getTitle(){
+    int age = DateTime.now().year - date.year;
+    return '$name fyller ${age.toString()} år den ${date.day
+        .toString()}.${date.month.toString()}';
+  }
 }

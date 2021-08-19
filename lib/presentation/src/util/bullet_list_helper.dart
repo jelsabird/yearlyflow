@@ -1,32 +1,48 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:yearly_flow/presentation/src/core/styles.dart';
-
 class BulletListHelper {
   static convertTextToList(String text) {
     LineSplitter lineSplitter = LineSplitter();
     return lineSplitter.convert(text.trim());
   }
 
-  static List<Widget> getTextRows(List<String> textList) {
-    final List<Widget> rows = <Widget>[];
-    for (final String text in textList) {
-      rows.add(Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "• ",
-            style: Styles.cardBodyStyle,
-          ),
-          Expanded(
-              child: Text(
-            text,
-            style: Styles.cardBodyStyle,
-          ))
-        ],
-      ));
+  static String formatStringFromString(String text) {
+    LineSplitter lineSplitter = LineSplitter();
+    var list = lineSplitter.convert(text.trim());
+    StringBuffer buffer = StringBuffer();
+    for (String line in list) {
+      buffer.write("• ");
+      buffer.write(line);
+      buffer.writeln();
     }
-    return rows;
+
+    return buffer.toString();
+  }
+
+  static String formatStringFromList(List<String> list) {
+    StringBuffer buffer = StringBuffer();
+    for (String line in list) {
+      buffer.write("• ");
+      buffer.write(line);
+      buffer.writeln();
+    }
+
+    return buffer.toString();
+  }
+
+  static String formatRecipe(
+    String introduction,
+    List<String> ingredients,
+    String instructions,
+  ) {
+    StringBuffer buffer = StringBuffer();
+
+    buffer.write(introduction);
+    buffer.writeln();
+    buffer.write(formatStringFromList(ingredients));
+    buffer.writeln();
+    buffer.write(instructions);
+
+    return buffer.toString();
   }
 }

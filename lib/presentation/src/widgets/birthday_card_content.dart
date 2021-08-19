@@ -46,9 +46,6 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
 
   @override
   Widget build(BuildContext context) {
-
-    final int age = DateTime.now().year - widget.birthday.date.year;
-
     if (widget.isEditing) {
       return Column(
         children: [
@@ -82,11 +79,7 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
       );
     }
     else {
-      return Text(
-        '${widget.birthday.name} fyller $age år den ${widget.birthday.date.day
-            .toString()}.${widget.birthday.date.month.toString()}.',
-        style: Styles.cardTitleStyle
-        ,);
+      return Text('');
     }
   }
 }

@@ -19,8 +19,11 @@ class RecipeCardContent extends StatefulWidget {
 }
 
 class _RecipeCardContentState extends State<RecipeCardContent> {
-  void _updateRecipe({String? title, String? introduction, List<String>?
-  ingredients, String? instructions}) {
+  void _updateRecipe(
+      {String? title,
+      String? introduction,
+      List<String>? ingredients,
+      String? instructions}) {
     if (title != null) {
       widget.recipe.title = title.trim();
     }
@@ -65,9 +68,8 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
             maxLines: 5,
             style: Styles.cardBodyStyle,
             decoration: InputDecoration(
-              hintText: Strings.recipe_introduction,
-              hintStyle: Styles.cardBodyStyle
-            ),
+                hintText: Strings.recipe_introduction,
+                hintStyle: Styles.cardBodyStyle),
           ),
           const SizedBox(
             height: 8,
@@ -75,17 +77,17 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
           TextField(
             onChanged: (String editedIngredients) {
               setState(() {
-                _updateRecipe(ingredients: BulletListHelper.convertTextToList(
-                    editedIngredients));
+                _updateRecipe(
+                    ingredients:
+                        BulletListHelper.convertTextToList(editedIngredients));
               });
             },
             minLines: 5,
             maxLines: 20,
             style: Styles.cardBodyStyle,
             decoration: InputDecoration(
-              hintText: Strings.recipe_ingredients,
-              hintStyle: Styles.cardBodyStyle
-            ),
+                hintText: Strings.recipe_ingredients,
+                hintStyle: Styles.cardBodyStyle),
           ),
           const SizedBox(
             height: 8,
@@ -100,34 +102,17 @@ class _RecipeCardContentState extends State<RecipeCardContent> {
             maxLines: 20,
             style: Styles.cardBodyStyle,
             decoration: InputDecoration(
-              hintText: Strings.recipe_instructions,
-              hintStyle: Styles.cardBodyStyle
-            ),
+                hintText: Strings.recipe_instructions,
+                hintStyle: Styles.cardBodyStyle),
           ),
         ],
       );
-    }
-    else {
-      return Column(
-        children: [
-          Text(
-            widget.recipe.title,
-            style: Styles.cardTitleStyle,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(widget.recipe.introduction, style: Styles.cardBodyStyle,),
-          const SizedBox(
-            height: 8,
-          ),
-          Column(children: BulletListHelper.getTextRows(widget.recipe
-              .ingredients)),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(widget.recipe.instructions, style: Styles.cardBodyStyle,),
-        ],
+    } else {
+      return Text(
+        BulletListHelper.formatRecipe(widget.recipe.introduction,
+            widget.recipe.ingredients, widget.recipe.instructions),
+        overflow: TextOverflow.fade,
+        style: Styles.cardBodyStyle,
       );
     }
   }

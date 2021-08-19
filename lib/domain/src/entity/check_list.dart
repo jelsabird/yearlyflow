@@ -9,6 +9,8 @@ class CheckList implements InspirationContent {
     return CheckList();
   }
 
+  String getTitle() => title;
+
   String title = '';
   List<CheckListItem> list = <CheckListItem>[];
 }

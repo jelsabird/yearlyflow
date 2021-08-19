@@ -18,6 +18,8 @@ class BulletList implements InspirationContent {
     );
   }
 
+  String getTitle() => title;
+
   String title = '';
   List<String> bulletPoints = <String>[];
 }
