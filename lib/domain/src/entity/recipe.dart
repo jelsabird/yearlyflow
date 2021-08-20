@@ -1,25 +1,41 @@
-import 'package:yearly_flow/domain/src/util/parser.dart';
+import 'package:hive/hive.dart';
 
-import 'inspiration_content.dart';
+import 'enums/inspiration_type.dart';
+import 'enums/month.dart';
+import 'enums/time_of_month.dart';
+import 'inspiration.dart';
 
-class Recipe implements InspirationContent {
-  Recipe(this.title, this.ingredients, this.instructions,
-      {this.introduction = ''});
+part 'recipe.g.dart';
+
+@HiveType(typeId: 2)
+class Recipe extends Inspiration {
+  Recipe({
+    this.month = Month.January,
+    this.timeOfMonth = TimeOfMonth.Any,
+    this.title = '',
+    this.introduction = '',
+    this.ingredients = const <String>[],
+    this.instructions = '',
+      }) : super(
+    inspirationType: InspirationType.Recipe,
+    month: month,
+    timeOfMonth: timeOfMonth,
+  );
 
   @override
-  factory Recipe.fromJson(Map<String, dynamic> json) {
-    final String? parsedTitle = Parser.getString(json, 'title');
-    final String? parsedIntroduction = Parser.getString(json, 'introduction');
-    final List<String> parsedIngredients =
-        List<String>.from(Parser.getList(json, 'ingredients'));
-    final String? parsedInstructions = Parser.getString(json, 'instructions');
+  String get getTitle => title;
 
-    return Recipe(
-        parsedTitle ?? '', parsedIngredients, parsedInstructions ?? '',
-        introduction: parsedIntroduction ?? '');
-  }
+  @HiveField(0)
+  @override
+  InspirationType inspirationType = InspirationType.Recipe;
 
-  String getTitle() => title;
+  @HiveField(1)
+  @override
+  Month month;
+
+  @HiveField(2)
+  @override
+  TimeOfMonth timeOfMonth;
 
   String title = '';
   String introduction = '';

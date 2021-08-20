@@ -1,4 +1,4 @@
-import 'package:yearly_flow/domain/src/util/enums/month.dart';
+import 'package:yearly_flow/domain/src/entity/enums/month.dart';
 
 class MonthSection {
 

@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
-import 'package:yearly_flow/domain/src/entity/note.dart';
-import 'package:yearly_flow/domain/src/util/enums/inspiration_type.dart';
-import 'package:yearly_flow/domain/src/util/enums/month.dart';
-import 'package:yearly_flow/domain/src/util/enums/time_of_month.dart';
+import 'package:yearly_flow/domain/src/entity/enums/month.dart';
+import 'package:yearly_flow/domain/src/entity/enums/time_of_month.dart';
 import 'package:yearly_flow/presentation/src/core/app_color_scheme.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 import 'package:yearly_flow/presentation/src/widgets/inspiration_card.dart';
@@ -17,9 +15,7 @@ class EditCardPage extends StatefulWidget {
 }
 
 class _EditCardPageState extends State<EditCardPage> {
-  late Inspiration inspiration = Inspiration(
-      InspirationType.Note, Month.January,
-      content: Note(), timeOfMonth: TimeOfMonth.Any);
+  late Inspiration inspiration = Inspiration();
 
   TimeOfMonth timeDropdownValue = TimeOfMonth.Start;
   Month monthDropdownValue = Month.January;

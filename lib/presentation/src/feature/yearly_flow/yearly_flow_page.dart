@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/presentation/src/entity/month_section.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/view_card/view_card_page.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/yearly_flow_controller.dart';
-import 'package:yearly_flow/domain/src/util/enums/month.dart';
+import 'package:yearly_flow/domain/src/entity/enums/month.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/add_card'
     '/add_card_page.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
@@ -39,22 +40,22 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
   }
 
   void _addCard(Month month) {
-    Navigator.push(
-      context,
-      MaterialPageRoute<AddCardPage>(
-        builder: (BuildContext context) => const AddCardPage(),
-        settings: RouteSettings(arguments: month),
-      ),
-    );
+    Navigator.of(context).push(
+        _createRoute(const AddCardPage(), RouteSettings(arguments: month)));
   }
 
   void _viewCard(Inspiration inspiration) {
-    Navigator.push(
-      context,
-      MaterialPageRoute<ViewCardPage>(
-        builder: (BuildContext context) => const ViewCardPage(),
-        settings: RouteSettings(arguments: inspiration),
-      ),
+    Navigator.of(context).push(_createRoute(
+        const ViewCardPage(), RouteSettings(arguments: inspiration)));
+  }
+
+  Route _createRoute(Widget destination, RouteSettings routeSettings) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => destination,
+      settings: routeSettings,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
     );
   }
 
@@ -77,10 +78,12 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
               childAspectRatio: 1,
             ),
             itemBuilder: (contxt, indx) {
-              return InspirationCard(
-                currentMonthCards[indx],
-                onTap: () => _viewCard(currentMonthCards[indx]),
-              );
+              return Hero(
+                  tag: currentMonthCards[indx].getTitle,
+                  child: InspirationCard(
+                    currentMonthCards[indx],
+                    onTap: () => _viewCard(currentMonthCards[indx]),
+                  ));
             },
           )),
         );

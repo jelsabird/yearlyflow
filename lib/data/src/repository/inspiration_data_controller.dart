@@ -17,7 +17,7 @@ class InspirationDataController {
 
       for (int i = 0;i<list.length;i++) {
 
-        inspirationList.add(Inspiration.fromJson(list[i]));
+        //inspirationList.add(Inspiration.fromJson(list[i]));
       }
 
       return Future<List<Inspiration>>.value(inspirationList);

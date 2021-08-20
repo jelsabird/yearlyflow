@@ -1,18 +1,35 @@
+import 'package:hive/hive.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 
+part 'month.g.dart';
+
+@HiveType(typeId: 5)
 enum Month {
+  @HiveField(0)
   January,
+@HiveField(1)
   February,
+@HiveField(2)
   March,
+@HiveField(3)
   April,
+@HiveField(4)
   May,
+@HiveField(5)
   June,
+@HiveField(6)
   July,
+@HiveField(7)
   August,
+@HiveField(8)
   September,
+@HiveField(9)
   October,
+@HiveField(10)
   November,
+@HiveField(11)
   December
 }
 
