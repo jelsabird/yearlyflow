@@ -1,6 +1,9 @@
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:yearly_flow/data/src/repository/inspiration_data_controller.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
-import 'package:yearly_flow/domain/src/util/enums/month.dart';
+import 'package:yearly_flow/domain/src/entity/enums/month.dart';
 import 'package:yearly_flow/presentation/src/entity/month_section.dart';
 
 class YearlyFlowController {

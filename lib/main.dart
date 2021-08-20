@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yearly_flow/presentation/src/feature/yearly_flow/yearly_flow_page.dart';
+import 'package:yearly_flow/presentation/src/feature/yearly_flow/splash/splash_page.dart';
 import 'package:yearly_flow/presentation/src/core/styles.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Yearly flow',
       theme: ThemeDataConfig.configure(),
-      home: const YearlyFlowPage(),
+      home: const SplashPage(),
     );
   }
 }

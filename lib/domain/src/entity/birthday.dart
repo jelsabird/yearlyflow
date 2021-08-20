@@ -1,35 +1,48 @@
-import 'package:yearly_flow/domain/src/util/parser.dart';
+import 'package:hive/hive.dart';
 
-import 'inspiration_content.dart';
+import 'enums/inspiration_type.dart';
+import 'enums/month.dart';
+import 'enums/time_of_month.dart';
+import 'inspiration.dart';
 
-class Birthday implements InspirationContent {
-  Birthday(
-    this.name,
+part 'birthday.g.dart';
+
+@HiveType(typeId: 3)
+class Birthday extends Inspiration {
+  Birthday({
+    this.month = Month.January,
+    this.timeOfMonth = TimeOfMonth.Any,
+    this.name = '',
     this.date,
+  }) : super(
+    inspirationType: InspirationType.Birthday,
+    month: month,
+    timeOfMonth: timeOfMonth,
   );
 
-  factory Birthday.fromJson(Map<String, dynamic> json) {
-    final String? parsedName = Parser.getString(json, 'name');
-    final DateTime? parsedDate = Parser.getTime(json, 'date');
-    if (parsedName == null) {
-      throw Exception('Birthday.name cannot be null.');
-    }
-    if (parsedDate == null) {
-      throw Exception('Birthday.date cannot be null');
-    }
-
-    return Birthday(
-      parsedName,
-      parsedDate,
-    );
+  @override
+  String get getTitle {
+    if (date == null) return '';
+  int age = DateTime.now().year - date!.year;
+  return '$name fyller ${age.toString()} år den ${date!.day
+      .toString()}.${date!.month.toString()}';
   }
 
-  String name;
-  DateTime date;
+  @HiveField(0)
+  @override
+  InspirationType inspirationType = InspirationType.Birthday;
 
-  String getTitle(){
-    int age = DateTime.now().year - date.year;
-    return '$name fyller ${age.toString()} år den ${date.day
-        .toString()}.${date.month.toString()}';
-  }
+  @HiveField(1)
+  @override
+  Month month;
+
+  @HiveField(2)
+  @override
+  TimeOfMonth timeOfMonth;
+
+  @HiveField(3)
+  String name = '';
+
+  @HiveField(4)
+  DateTime? date = DateTime.now();
 }

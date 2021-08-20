@@ -1,17 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:yearly_flow/data/src/repository/data_controller.dart';
+
 import 'package:yearly_flow/domain/src/entity/birthday.dart';
 import 'package:yearly_flow/domain/src/entity/bullet_list.dart';
-import 'package:yearly_flow/domain/src/entity/check_list.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
-import 'package:yearly_flow/domain/src/entity/inspiration_content.dart';
 import 'package:yearly_flow/domain/src/entity/note.dart';
 import 'package:yearly_flow/domain/src/entity/recipe.dart';
-import 'package:yearly_flow/domain/src/util/enums/inspiration_type.dart';
-import 'package:yearly_flow/domain/src/util/enums/month.dart';
-import 'package:yearly_flow/domain/src/util/enums/time_of_month.dart';
+import 'package:yearly_flow/domain/src/entity/enums/inspiration_type.dart';
+import 'package:yearly_flow/domain/src/entity/enums/month.dart';
+import 'package:yearly_flow/domain/src/entity/enums/time_of_month.dart';
 import 'package:yearly_flow/presentation/src/core/app_color_scheme.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
+import 'package:yearly_flow/presentation/src/feature/yearly_flow/add_card/add_card_controller.dart';
 import 'package:yearly_flow/presentation/src/widgets/inspiration_card.dart';
 
 class AddCardPage extends StatefulWidget {
@@ -23,36 +25,35 @@ class AddCardPage extends StatefulWidget {
 
 class _AddCardPageState extends State<AddCardPage> {
   _AddCardPageState() : super();
-
-  late Inspiration inspiration = Inspiration(
-      InspirationType.Note, Month.January,
-      content: Note(), timeOfMonth: TimeOfMonth.Any);
+  late AddCardController _controller;
+  late Inspiration _inspiration;
 
   @override
   void initState() {
     super.initState();
+
+    _controller = AddCardController();
+    _inspiration = _controller.inspiration;
   }
 
-  void _setInspirationType(
-      InspirationType newType, InspirationContent newContent) {
+  void _setInspirationType(Inspiration newContent) {
     setState(() {
-      inspiration.inspirationType = newType;
-      inspiration.content = newContent;
+      _inspiration = newContent;
     });
   }
 
   void _setTimeOfMonth(TimeOfMonth newTimeOfMonth) {
     setState(() {
-      inspiration.timeOfMonth = newTimeOfMonth;
+      _inspiration.timeOfMonth = newTimeOfMonth;
     });
   }
 
   bool isSelectedType(InspirationType thisType) {
-    return inspiration.inspirationType == thisType;
+    return _inspiration.inspirationType == thisType;
   }
 
   bool isSelectedTime(TimeOfMonth thisTime) {
-    return inspiration.timeOfMonth == thisTime;
+    return _inspiration.timeOfMonth == thisTime;
   }
 
   ButtonStyle _selectedStyle(bool isSelected) {
@@ -63,9 +64,15 @@ class _AddCardPageState extends State<AddCardPage> {
     }
   }
 
+  void _save() async {
+    _controller.save();
+
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    inspiration.month = ModalRoute.of(context)!.settings.arguments as Month;
+    _inspiration.month = ModalRoute.of(context)!.settings.arguments as Month;
 
     return Scaffold(
       appBar: AppBar(
@@ -113,43 +120,36 @@ class _AddCardPageState extends State<AddCardPage> {
             ButtonBar(
               children: <Widget>[
                 TextButton(
-                  onPressed: () =>
-                      _setInspirationType(InspirationType.Note, Note()),
+                  onPressed: () => _setInspirationType(Note()),
                   child: Text(InspirationType.Note.displayTitle),
                   style: _selectedStyle(isSelectedType(InspirationType.Note)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(
-                      InspirationType.BulletList, BulletList('', <String>[])),
+                  onPressed: () => _setInspirationType(BulletList()),
                   child: Text(InspirationType.BulletList.displayTitle),
                   style: _selectedStyle(
                       isSelectedType(InspirationType.BulletList)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(
-                      InspirationType.CheckList, CheckList()),
-                  child: Text(InspirationType.CheckList.displayTitle),
-                  style:
-                      _selectedStyle(isSelectedType(InspirationType.CheckList)),
-                ),
-                TextButton(
-                  onPressed: () => _setInspirationType(
-                      InspirationType.Recipe, Recipe('', <String>[], '')),
+                  onPressed: () => _setInspirationType(Recipe()),
                   child: Text(InspirationType.Recipe.displayTitle),
                   style: _selectedStyle(isSelectedType(InspirationType.Recipe)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(
-                      InspirationType.Birthday, Birthday('', DateTime.now())),
+                  onPressed: () => _setInspirationType(Birthday()),
                   child: Text(InspirationType.Birthday.displayTitle),
                   style:
                       _selectedStyle(isSelectedType(InspirationType.Birthday)),
                 ),
               ],
             ),
-            InspirationCard(inspiration, isEditing: true),
+            InspirationCard(_inspiration, isEditing: true),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _save(),
+        child: const Icon(Icons.check),
       ),
     );
   }

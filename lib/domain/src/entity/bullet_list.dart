@@ -1,25 +1,42 @@
-import 'package:yearly_flow/domain/src/util/parser.dart';
+import 'package:hive/hive.dart';
 
-import 'inspiration_content.dart';
+import 'enums/inspiration_type.dart';
+import 'enums/month.dart';
+import 'enums/time_of_month.dart';
+import 'inspiration.dart';
+part 'bullet_list.g.dart';
 
-class BulletList implements InspirationContent {
-
-  BulletList(this.title, this.bulletPoints);
+@HiveType(typeId: 1)
+class BulletList extends Inspiration {
+  BulletList({
+    this.month = Month.January,
+    this.timeOfMonth = TimeOfMonth.Any,
+    this.title = '',
+    this.bulletPoints = const <String>[],
+  }) : super(
+          inspirationType: InspirationType.BulletList,
+          month: month,
+          timeOfMonth: timeOfMonth,
+        );
 
   @override
-  factory BulletList.fromJson(Map<String, dynamic> json) {
-    final String? parsedTitle = Parser.getString(json, 'title');
-    final List<String> parsedBulletPoints =  List<String>.from(Parser.getList
-    (json, 'bulletPoints'));
+  String get getTitle => title;
 
-    return BulletList(
-      parsedTitle ?? '',
-      parsedBulletPoints
-    );
-  }
+  @HiveField(0)
+  @override
+  InspirationType inspirationType = InspirationType.BulletList;
 
-  String getTitle() => title;
+  @HiveField(1)
+  @override
+  Month month;
 
+  @HiveField(2)
+  @override
+  TimeOfMonth timeOfMonth;
+
+  @HiveField(3)
   String title = '';
+
+  @HiveField(4)
   List<String> bulletPoints = <String>[];
 }

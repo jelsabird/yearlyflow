@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/birthday.dart';
 import 'package:yearly_flow/domain/src/entity/bullet_list.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
-import 'package:yearly_flow/domain/src/entity/inspiration_content.dart';
 import 'package:yearly_flow/domain/src/entity/note.dart';
 import 'package:yearly_flow/domain/src/entity/recipe.dart';
-import 'package:yearly_flow/domain/src/util/enums/inspiration_type.dart';
+import 'package:yearly_flow/domain/src/entity/enums/inspiration_type.dart';
 import 'package:yearly_flow/presentation/src/core/styles.dart';
 
 import 'recipe_card_content.dart';
@@ -28,7 +27,7 @@ class _CardContentState extends State<CardContent> {
     return SizedBox(
       height: 32,
       child: Text(
-        widget.inspiration.content!.getTitle(),
+        widget.inspiration.getTitle,
         style: Styles.cardTitleStyle,
       ),
     );
@@ -41,37 +40,27 @@ class _CardContentState extends State<CardContent> {
   }
 
   Widget _getContent() {
-    final InspirationContent? _content = this.widget.inspiration.content;
-    if (_content == null) {
-      return SizedBox(height: 40);
-    } else {
-      switch (widget.inspiration.inspirationType) {
-        case InspirationType.Note:
-          return NoteCardContent(
-            note: _content as Note,
-            isEditing: widget.isEditing,
-          );
-        case InspirationType.Birthday:
-          return BirthdayCardContent(
-            birthday: _content as Birthday,
-            isEditing: widget.isEditing,
-          );
-        case InspirationType.BulletList:
-          return BulletListCardContent(
-            bulletList: _content as BulletList,
-            isEditing: widget.isEditing,
-          );
-        case InspirationType.CheckList:
-          return SizedBox(
-            height: 40,
-            child: Text('(Not implemented)'),
-          );
-        case InspirationType.Recipe:
-          return RecipeCardContent(
-            recipe: _content as Recipe,
-            isEditing: widget.isEditing,
-          );
-      }
+    switch (widget.inspiration.inspirationType) {
+      case InspirationType.Note:
+        return NoteCardContent(
+          note: widget.inspiration as Note,
+          isEditing: widget.isEditing,
+        );
+      case InspirationType.Birthday:
+        return BirthdayCardContent(
+          birthday: widget.inspiration as Birthday,
+          isEditing: widget.isEditing,
+        );
+      case InspirationType.BulletList:
+        return BulletListCardContent(
+          bulletList: widget.inspiration as BulletList,
+          isEditing: widget.isEditing,
+        );
+      case InspirationType.Recipe:
+        return RecipeCardContent(
+          recipe: widget.inspiration as Recipe,
+          isEditing: widget.isEditing,
+        );
     }
   }
 

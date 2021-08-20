@@ -40,7 +40,7 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
     }
     if (date != null){
       widget.birthday.date = date;
-      age = DateTime.now().year - widget.birthday.date.year;
+      age = DateTime.now().year - widget.birthday.date!.year;
     }
   }
 

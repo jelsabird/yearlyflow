@@ -1,9 +1,18 @@
+import 'package:hive/hive.dart';
+
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 
+part 'time_of_month.g.dart';
+
+@HiveType(typeId: 6)
 enum TimeOfMonth {
+@HiveField(0)
   Any,
+@HiveField(1)
   Start,
+@HiveField(2)
   Middle,
+@HiveField(3)
   End
 }
 

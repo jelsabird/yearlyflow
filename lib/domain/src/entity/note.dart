@@ -1,24 +1,43 @@
-import 'package:yearly_flow/domain/src/util/parser.dart';
+import 'package:hive/hive.dart';
 
-import 'inspiration_content.dart';
+import 'enums/inspiration_type.dart';
+import 'enums/month.dart';
+import 'enums/time_of_month.dart';
+import 'inspiration.dart';
 
-class Note implements InspirationContent {
+part 'note.g.dart';
 
-  Note({this.title = '', this.text = ''});
+@HiveType(typeId: 0)
+class Note extends Inspiration {
+  Note({
+    this.month = Month.January,
+    this.timeOfMonth = TimeOfMonth.Any,
+    this.title = '',
+    this.text = '',
+  }) : super(
+          inspirationType: InspirationType.Note,
+          month: month,
+          timeOfMonth: timeOfMonth,
+        );
 
   @override
-  factory Note.fromJson(Map<String, dynamic> json) {
-    final String? parsedTitle = Parser.getString(json, 'title');
-    final String? parsedText = Parser.getString(json, 'text');
+  String get getTitle => title;
 
-    return Note(
-      title: parsedTitle ?? '',
-      text: parsedText ?? '',
-    );
-  }
+  @HiveField(0)
+  @override
+  InspirationType inspirationType = InspirationType.Note;
 
-  String getTitle() => title;
+  @HiveField(1)
+  @override
+  Month month;
 
-  String title;
-  String text;
+  @HiveField(2)
+  @override
+  TimeOfMonth timeOfMonth;
+
+  @HiveField(3)
+  String title = '';
+
+  @HiveField(4)
+  String text = '';
 }
