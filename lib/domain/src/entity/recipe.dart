@@ -8,37 +8,43 @@ import 'inspiration.dart';
 part 'recipe.g.dart';
 
 @HiveType(typeId: 2)
-class Recipe extends Inspiration {
+class Recipe implements Inspiration {
   Recipe({
+    this.key = '',
     this.month = Month.January,
     this.timeOfMonth = TimeOfMonth.Any,
     this.title = '',
     this.introduction = '',
     this.ingredients = const <String>[],
     this.instructions = '',
-      }) : super(
-    inspirationType: InspirationType.Recipe,
-    month: month,
-    timeOfMonth: timeOfMonth,
-  );
-
-  @override
-  String get getTitle => title;
+      });
 
   @HiveField(0)
   @override
-  InspirationType inspirationType = InspirationType.Recipe;
+  String key;
 
   @HiveField(1)
   @override
-  Month month;
+  InspirationType inspirationType = InspirationType.Recipe;
 
   @HiveField(2)
   @override
+  Month month;
+
+  @HiveField(3)
+  @override
   TimeOfMonth timeOfMonth;
 
+  @HiveField(4)
+  @override
   String title = '';
+  
+  @HiveField(5)
   String introduction = '';
+
+  @HiveField(6)
   List<String> ingredients = <String>[];
+  
+  @HiveField(7)
   String instructions = '';
 }

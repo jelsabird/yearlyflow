@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/domain/src/entity/enums/month.dart';
 import 'package:yearly_flow/domain/src/entity/enums/time_of_month.dart';
+import 'package:yearly_flow/domain/src/entity/note.dart';
 import 'package:yearly_flow/presentation/src/core/app_color_scheme.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
+import 'package:yearly_flow/presentation/src/feature/yearly_flow/edit_card/edit_card_controller.dart';
 import 'package:yearly_flow/presentation/src/widgets/inspiration_card.dart';
 
 class EditCardPage extends StatefulWidget {
@@ -15,14 +17,21 @@ class EditCardPage extends StatefulWidget {
 }
 
 class _EditCardPageState extends State<EditCardPage> {
-  late Inspiration inspiration = Inspiration();
-
-  TimeOfMonth timeDropdownValue = TimeOfMonth.Start;
-  Month monthDropdownValue = Month.January;
+  late EditCardController _controller;
+  late Inspiration _inspiration;
 
   @override
   void initState() {
     super.initState();
+
+    _controller = EditCardController();
+    _inspiration = Note();
+  }
+
+  void _save() async {
+    _controller.save(_inspiration);
+
+    Navigator.pop(context);
   }
 
   Widget _buildSelectionRow() {
@@ -33,7 +42,7 @@ class _EditCardPageState extends State<EditCardPage> {
           style: TextStyle(color: AppColorScheme.backgroundDarkForeground),
         ),
         DropdownButton(
-            value: timeDropdownValue,
+            value: _inspiration.timeOfMonth,
             icon: const Icon(Icons.arrow_downward),
             iconSize: 24,
             dropdownColor: AppColorScheme.backgroundDark,
@@ -44,7 +53,7 @@ class _EditCardPageState extends State<EditCardPage> {
             ),
             onChanged: (TimeOfMonth? newValue) {
               setState(() {
-                timeDropdownValue = newValue!;
+                _inspiration.timeOfMonth = newValue!;
               });
             },
             items: TimeOfMonth.values
@@ -55,7 +64,7 @@ class _EditCardPageState extends State<EditCardPage> {
               );
             }).toList()),
         DropdownButton(
-            value: monthDropdownValue,
+            value: _inspiration.month,
             icon: const Icon(Icons.arrow_downward),
             iconSize: 24,
             dropdownColor: AppColorScheme.backgroundDark,
@@ -66,7 +75,7 @@ class _EditCardPageState extends State<EditCardPage> {
             ),
             onChanged: (Month? newValue) {
               setState(() {
-                monthDropdownValue = newValue!;
+                _inspiration.month = newValue!;
               });
             },
             items: Month.values.map<DropdownMenuItem<Month>>((Month month) {
@@ -79,13 +88,9 @@ class _EditCardPageState extends State<EditCardPage> {
     );
   }
 
-  void _save(){
-    Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
-    inspiration = ModalRoute.of(context)!.settings.arguments as Inspiration;
+    _inspiration = ModalRoute.of(context)!.settings.arguments as Inspiration;
 
     return Scaffold(
       appBar: AppBar(
@@ -98,7 +103,7 @@ class _EditCardPageState extends State<EditCardPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              InspirationCard(inspiration, isEditing: true),
+              InspirationCard(_inspiration, isEditing: true),
               _buildSelectionRow(),
             ],
           ),

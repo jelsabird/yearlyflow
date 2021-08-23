@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
+import 'package:yearly_flow/domain/src/entity/note.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/edit_card/edit_card_page.dart';
 import 'package:yearly_flow/presentation/src/widgets/inspiration_card.dart';
@@ -14,26 +15,34 @@ class ViewCardPage extends StatefulWidget {
 class _ViewCardPageState extends State<ViewCardPage> {
   _ViewCardPageState() : super();
 
-  late Inspiration inspiration = Inspiration();
+  late Inspiration _inspiration;
 
   @override
   void initState() {
     super.initState();
+
+    _inspiration = Note();
   }
 
-  void _editCard() {
-    Navigator.push(
+  Future<void> _editCard() async {
+    await Navigator.push(
       context,
       MaterialPageRoute<EditCardPage>(
         builder: (BuildContext context) => const EditCardPage(),
-        settings: RouteSettings(arguments: inspiration),
+        settings: RouteSettings(arguments: _inspiration),
       ),
     );
+
+    setState(() {});
+
+    return Future.value();
   }
 
   @override
   Widget build(BuildContext context) {
-    inspiration = ModalRoute.of(context)!.settings.arguments as Inspiration;
+    var arguments = ModalRoute.of(context)!.settings.arguments as List<Object>;
+    _inspiration = arguments[0] as Inspiration;
+    var index = arguments[1] as int;
 
     return Scaffold(
       appBar: AppBar(
@@ -44,8 +53,8 @@ class _ViewCardPageState extends State<ViewCardPage> {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Hero(
-            tag: inspiration.getTitle,
-              child: InspirationCard(inspiration)
+            tag: "${_inspiration.title} + $index",
+              child: InspirationCard(_inspiration)
           ),
         ),
       ),

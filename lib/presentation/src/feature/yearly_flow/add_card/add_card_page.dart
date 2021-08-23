@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:yearly_flow/data/src/repository/data_controller.dart';
-
 import 'package:yearly_flow/domain/src/entity/birthday.dart';
 import 'package:yearly_flow/domain/src/entity/bullet_list.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
@@ -33,7 +29,7 @@ class _AddCardPageState extends State<AddCardPage> {
     super.initState();
 
     _controller = AddCardController();
-    _inspiration = _controller.inspiration;
+    _inspiration = Note(key: UniqueKey().toString());
   }
 
   void _setInspirationType(Inspiration newContent) {
@@ -42,18 +38,8 @@ class _AddCardPageState extends State<AddCardPage> {
     });
   }
 
-  void _setTimeOfMonth(TimeOfMonth newTimeOfMonth) {
-    setState(() {
-      _inspiration.timeOfMonth = newTimeOfMonth;
-    });
-  }
-
   bool isSelectedType(InspirationType thisType) {
     return _inspiration.inspirationType == thisType;
-  }
-
-  bool isSelectedTime(TimeOfMonth thisTime) {
-    return _inspiration.timeOfMonth == thisTime;
   }
 
   ButtonStyle _selectedStyle(bool isSelected) {
@@ -65,9 +51,63 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   void _save() async {
-    _controller.save();
+    _controller.save(_inspiration);
 
     Navigator.pop(context);
+  }
+
+  Widget _buildSelectionRow() {
+    return Row(
+      children: [
+        Text(
+          Strings.editMonthAndTime,
+          style: TextStyle(color: AppColorScheme.backgroundDarkForeground),
+        ),
+        DropdownButton(
+            value: _inspiration.timeOfMonth,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            dropdownColor: AppColorScheme.backgroundDark,
+            style: const TextStyle(color: AppColorScheme.accent),
+            underline: Container(
+              height: 2,
+              color: AppColorScheme.accent,
+            ),
+            onChanged: (TimeOfMonth? newValue) {
+              setState(() {
+                _inspiration.timeOfMonth = newValue!;
+              });
+            },
+            items: TimeOfMonth.values
+                .map<DropdownMenuItem<TimeOfMonth>>((TimeOfMonth time) {
+              return DropdownMenuItem<TimeOfMonth>(
+                value: time,
+                child: Text(time.displayString),
+              );
+            }).toList()),
+        DropdownButton(
+            value: _inspiration.month,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            dropdownColor: AppColorScheme.backgroundDark,
+            style: const TextStyle(color: AppColorScheme.accent),
+            underline: Container(
+              height: 2,
+              color: AppColorScheme.accent,
+            ),
+            onChanged: (Month? newValue) {
+              setState(() {
+                _inspiration.month = newValue!;
+              });
+            },
+            items: Month.values.map<DropdownMenuItem<Month>>((Month month) {
+              return DropdownMenuItem<Month>(
+                value: month,
+                child: Text(month.displayTitle.toLowerCase()),
+              );
+            }).toList()),
+      ],
+    );
   }
 
   @override
@@ -91,52 +131,28 @@ class _AddCardPageState extends State<AddCardPage> {
             ButtonBar(
               children: <Widget>[
                 TextButton(
-                  onPressed: () => _setTimeOfMonth(TimeOfMonth.Start),
-                  child: Text(TimeOfMonth.Start.displayTitle),
-                  style: _selectedStyle(isSelectedTime(TimeOfMonth.Start)),
-                ),
-                TextButton(
-                  onPressed: () => _setTimeOfMonth(TimeOfMonth.Middle),
-                  child: Text(TimeOfMonth.Middle.displayTitle),
-                  style: _selectedStyle(isSelectedTime(TimeOfMonth.Middle)),
-                ),
-                TextButton(
-                  onPressed: () => _setTimeOfMonth(TimeOfMonth.End),
-                  child: Text(TimeOfMonth.End.displayTitle),
-                  style: _selectedStyle(isSelectedTime(TimeOfMonth.End)),
-                ),
-                TextButton(
-                  onPressed: () => _setTimeOfMonth(TimeOfMonth.Any),
-                  child: Text(TimeOfMonth.Any.displayTitle),
-                  style: _selectedStyle(isSelectedTime(TimeOfMonth.Any)),
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            const Text(
-              Strings.selectInspirationType,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            ButtonBar(
-              children: <Widget>[
-                TextButton(
-                  onPressed: () => _setInspirationType(Note()),
+                  onPressed: () => _setInspirationType(Note(key: UniqueKey()
+                      .toString())),
                   child: Text(InspirationType.Note.displayTitle),
                   style: _selectedStyle(isSelectedType(InspirationType.Note)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(BulletList()),
+                  onPressed: () => _setInspirationType(BulletList(key:
+                  UniqueKey().toString())),
                   child: Text(InspirationType.BulletList.displayTitle),
                   style: _selectedStyle(
                       isSelectedType(InspirationType.BulletList)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(Recipe()),
+                  onPressed: () => _setInspirationType(Recipe(key: UniqueKey
+                    ().toString())),
                   child: Text(InspirationType.Recipe.displayTitle),
                   style: _selectedStyle(isSelectedType(InspirationType.Recipe)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(Birthday()),
+                  onPressed: () => _setInspirationType(Birthday(key:
+                  UniqueKey().toString(), date:
+                  DateTime.now())),
                   child: Text(InspirationType.Birthday.displayTitle),
                   style:
                       _selectedStyle(isSelectedType(InspirationType.Birthday)),
@@ -144,6 +160,7 @@ class _AddCardPageState extends State<AddCardPage> {
               ],
             ),
             InspirationCard(_inspiration, isEditing: true),
+            _buildSelectionRow(),
           ],
         ),
       ),

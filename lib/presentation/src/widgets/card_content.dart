@@ -27,7 +27,7 @@ class _CardContentState extends State<CardContent> {
     return SizedBox(
       height: 32,
       child: Text(
-        widget.inspiration.getTitle,
+        widget.inspiration.title,
         style: Styles.cardTitleStyle,
       ),
     );

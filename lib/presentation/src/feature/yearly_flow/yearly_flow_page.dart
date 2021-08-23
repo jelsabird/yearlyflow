@@ -33,20 +33,29 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
     _loadData();
   }
 
-  void _loadData() async {
-    await _controller.loadInspirations();
+  void _loadData() {
+    _controller.loadInspirations();
 
     setState(() {});
   }
 
-  void _addCard(Month month) {
-    Navigator.of(context).push(
+  Future<void> _addCard(Month month) async {
+    await Navigator.of(context).push(
         _createRoute(const AddCardPage(), RouteSettings(arguments: month)));
+
+    _loadData();
+
+    return Future.value();
   }
 
-  void _viewCard(Inspiration inspiration) {
-    Navigator.of(context).push(_createRoute(
-        const ViewCardPage(), RouteSettings(arguments: inspiration)));
+  Future<void> _viewCard(Inspiration inspiration) async {
+    await Navigator.of(context).push(_createRoute(
+        const ViewCardPage(), RouteSettings(arguments: [inspiration,
+        _controller.inspirations.indexOf(inspiration)])));
+
+    _loadData();
+
+    return Future.value();
   }
 
   Route _createRoute(Widget destination, RouteSettings routeSettings) {
@@ -79,7 +88,7 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
             ),
             itemBuilder: (contxt, indx) {
               return Hero(
-                  tag: currentMonthCards[indx].getTitle,
+                  tag: "${currentMonthCards[indx].title} + $indx",
                   child: InspirationCard(
                     currentMonthCards[indx],
                     onTap: () => _viewCard(currentMonthCards[indx]),
@@ -93,6 +102,8 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
 
   @override
   Widget build(BuildContext context) {
+    _loadData();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(Strings.app_title),

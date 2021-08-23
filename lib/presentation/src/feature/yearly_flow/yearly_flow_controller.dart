@@ -1,13 +1,10 @@
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
-import 'package:yearly_flow/data/src/repository/inspiration_data_controller.dart';
+import 'package:yearly_flow/data/src/repository/data_controller.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/domain/src/entity/enums/month.dart';
 import 'package:yearly_flow/presentation/src/entity/month_section.dart';
 
 class YearlyFlowController {
-  late InspirationDataController dataController;
+  DataController _dataController = DataController.instance;
 
   final List<MonthSection> months = <MonthSection>[];
   final List<Inspiration> inspirations = <Inspiration>[];
@@ -39,11 +36,16 @@ class YearlyFlowController {
         a.timeOfMonth.index.compareTo(b.timeOfMonth.index));
   }
 
-  Future<void> loadInspirations() async {
-    dataController = InspirationDataController();
-    final List<Inspiration> result = await dataController.readJson();
+  void loadInspirations() {
+    var notes = _dataController.noteBox.values;
+    var bulletLists = _dataController.bulletListBox.values;
+    var recipes = _dataController.recipeBox.values;
+    var birthdays = _dataController.birthdayBox.values;
 
     inspirations.clear();
-    inspirations.addAll(result);
+    inspirations.addAll(notes);
+    inspirations.addAll(bulletLists);
+    inspirations.addAll(recipes);
+    inspirations.addAll(birthdays);
   }
 }

@@ -8,36 +8,35 @@ import 'inspiration.dart';
 part 'note.g.dart';
 
 @HiveType(typeId: 0)
-class Note extends Inspiration {
+class Note implements Inspiration {
   Note({
+    this.key = '',
     this.month = Month.January,
     this.timeOfMonth = TimeOfMonth.Any,
     this.title = '',
     this.text = '',
-  }) : super(
-          inspirationType: InspirationType.Note,
-          month: month,
-          timeOfMonth: timeOfMonth,
-        );
-
-  @override
-  String get getTitle => title;
+  });
 
   @HiveField(0)
   @override
-  InspirationType inspirationType = InspirationType.Note;
+  String key = '';
 
   @HiveField(1)
   @override
-  Month month;
+  InspirationType inspirationType = InspirationType.Note;
 
   @HiveField(2)
   @override
-  TimeOfMonth timeOfMonth;
+  Month month;
 
   @HiveField(3)
-  String title = '';
+  @override
+  TimeOfMonth timeOfMonth;
 
   @HiveField(4)
+  @override
+  String title = '';
+
+  @HiveField(5)
   String text = '';
 }
