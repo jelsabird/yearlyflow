@@ -8,41 +8,42 @@ import 'inspiration.dart';
 part 'birthday.g.dart';
 
 @HiveType(typeId: 3)
-class Birthday extends Inspiration {
+class Birthday implements Inspiration {
   Birthday({
+    this.key = '',
     this.month = Month.January,
     this.timeOfMonth = TimeOfMonth.Any,
     this.name = '',
     this.date,
-  }) : super(
-    inspirationType: InspirationType.Birthday,
-    month: month,
-    timeOfMonth: timeOfMonth,
-  );
+  });
+
+  @HiveField(0)
+  @override
+  String key;
+
+  @HiveField(1)
+  @override
+  InspirationType inspirationType = InspirationType.Birthday;
+
+  @HiveField(2)
+  @override
+  Month month;
+
+  @HiveField(3)
+  @override
+  TimeOfMonth timeOfMonth;
 
   @override
-  String get getTitle {
+  String get title {
     if (date == null) return '';
   int age = DateTime.now().year - date!.year;
   return '$name fyller ${age.toString()} år den ${date!.day
       .toString()}.${date!.month.toString()}';
   }
 
-  @HiveField(0)
-  @override
-  InspirationType inspirationType = InspirationType.Birthday;
-
-  @HiveField(1)
-  @override
-  Month month;
-
-  @HiveField(2)
-  @override
-  TimeOfMonth timeOfMonth;
-
-  @HiveField(3)
+  @HiveField(4)
   String name = '';
 
-  @HiveField(4)
+  @HiveField(5)
   DateTime? date = DateTime.now();
 }
