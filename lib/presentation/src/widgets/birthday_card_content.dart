@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/birthday.dart';
 import 'package:yearly_flow/presentation/src/core/styles.dart';
+import 'package:yearly_flow/presentation/src/util/event_bus_utils.dart';
+import 'package:yearly_flow/presentation/src/util/events/birthday_date_picked_event.dart';
 import 'package:yearly_flow/presentation/src/widgets/date_text_field.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 
@@ -41,6 +43,8 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
     if (date != null){
       widget.birthday.date = date;
       age = DateTime.now().year - widget.birthday.date!.year;
+
+      EventBusUtils.instance.fire(BirthdayDatePickedEvent(date));
     }
   }
 

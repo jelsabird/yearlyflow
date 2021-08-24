@@ -4,9 +4,12 @@ import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/domain/src/entity/enums/month.dart';
 import 'package:yearly_flow/domain/src/entity/enums/time_of_month.dart';
 import 'package:yearly_flow/domain/src/entity/note.dart';
+import 'package:yearly_flow/domain/src/util/month_helper.dart';
 import 'package:yearly_flow/presentation/src/core/app_color_scheme.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/edit_card/edit_card_controller.dart';
+import 'package:yearly_flow/presentation/src/util/event_bus_utils.dart';
+import 'package:yearly_flow/presentation/src/util/events/birthday_date_picked_event.dart';
 import 'package:yearly_flow/presentation/src/widgets/inspiration_card.dart';
 
 class EditCardPage extends StatefulWidget {
@@ -26,6 +29,13 @@ class _EditCardPageState extends State<EditCardPage> {
 
     _controller = EditCardController();
     _inspiration = Note();
+
+    EventBusUtils.instance.on<BirthdayDatePickedEvent>().listen((event) {
+      setState(() {
+        _inspiration.month = MonthHelper.getMonth(event.date);
+        _inspiration.timeOfMonth = MonthHelper.getTimeOfMonth(event.date);
+      });
+    });
   }
 
   void _save() async {
