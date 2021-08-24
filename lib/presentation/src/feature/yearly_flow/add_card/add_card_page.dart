@@ -1,3 +1,4 @@
+import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/domain/src/entity/birthday.dart';
 import 'package:yearly_flow/domain/src/entity/bullet_list.dart';
@@ -23,13 +24,14 @@ class _AddCardPageState extends State<AddCardPage> {
   _AddCardPageState() : super();
   late AddCardController _controller;
   late Inspiration _inspiration;
+  Uuid uuid = Uuid();
 
   @override
   void initState() {
     super.initState();
 
     _controller = AddCardController();
-    _inspiration = Note(key: UniqueKey().toString());
+    _inspiration = Note(key: uuid.v4());
   }
 
   void _setInspirationType(Inspiration newContent) {
@@ -125,8 +127,7 @@ class _AddCardPageState extends State<AddCardPage> {
             ButtonBar(
               children: <Widget>[
                 TextButton(
-                  onPressed: () => _setInspirationType(Note(key: UniqueKey()
-                      .toString())),
+                  onPressed: () => _setInspirationType(Note(key: uuid.v4())),
                   child: Text(InspirationType.Note.displayTitle),
                   style: _selectedStyle(isSelectedType(InspirationType.Note)),
                 ),
@@ -138,14 +139,13 @@ class _AddCardPageState extends State<AddCardPage> {
                       isSelectedType(InspirationType.BulletList)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(Recipe(key: UniqueKey
-                    ().toString())),
+                  onPressed: () => _setInspirationType(Recipe(key: uuid.v4())),
                   child: Text(InspirationType.Recipe.displayTitle),
                   style: _selectedStyle(isSelectedType(InspirationType.Recipe)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(Birthday(key:
-                  UniqueKey().toString(), date:
+                  onPressed: () => _setInspirationType(Birthday(key: uuid.v4(),
+                      date:
                   DateTime.now())),
                   child: Text(InspirationType.Birthday.displayTitle),
                   style:
