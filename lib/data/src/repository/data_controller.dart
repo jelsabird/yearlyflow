@@ -7,6 +7,7 @@ import 'package:yearly_flow/domain/src/entity/enums/time_of_month.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/domain/src/entity/note.dart';
 import 'package:yearly_flow/domain/src/entity/recipe.dart';
+import 'package:yearly_flow/src/models/month_section_model.dart';
 
 class DataController{
   static DataController instance = DataController();
@@ -14,6 +15,7 @@ class DataController{
   late Box<BulletList> bulletListBox;
   late Box<Recipe> recipeBox;
   late Box<Birthday> birthdayBox;
+  bool isInitiated = false;
 
   Future<void> initDatabase() async {
     await Hive.initFlutter();
@@ -28,6 +30,7 @@ class DataController{
 
     await openBoxes();
 
+    isInitiated = true;
     return Future.value();
   }
 
@@ -38,6 +41,19 @@ class DataController{
     birthdayBox = await Hive.openBox<Birthday>('1birthdayBox');
 
     return Future.value();
+  }
+
+  Future<MonthSectionModel> fetchAllInspirations() async {
+    if(!isInitiated){
+      await initDatabase();
+    }
+    var monthSection = MonthSectionModel();
+    monthSection.inspirationCards.addAll(noteBox.values);
+    monthSection.inspirationCards.addAll(bulletListBox.values);
+    monthSection.inspirationCards.addAll(recipeBox.values);
+    monthSection.inspirationCards.addAll(birthdayBox.values);
+
+    return monthSection;
   }
 
   void save(Inspiration inspiration){

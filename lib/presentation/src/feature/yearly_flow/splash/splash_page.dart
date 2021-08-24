@@ -4,6 +4,7 @@ import 'package:yearly_flow/presentation/src/core/app_color_scheme.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/splash/splash_controller.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/yearly_flow_page.dart';
+import 'package:yearly_flow/src/app.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _SplashPageState extends State<SplashPage> {
     await Future.delayed(Duration(seconds: 1));
 
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => YearlyFlowPage()));
+        context, MaterialPageRoute(builder: (context) => App()));
   }
 
   @override
