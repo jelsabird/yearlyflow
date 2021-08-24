@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yearly_flow/data/src/repository/data_controller.dart';
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/domain/src/entity/note.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
@@ -53,9 +54,8 @@ class _ViewCardPageState extends State<ViewCardPage> {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Hero(
-            tag: "${_inspiration.title} + $index",
-              child: InspirationCard(_inspiration)
-          ),
+              tag: "${_inspiration.title} + $index",
+              child: InspirationCard(_inspiration),),
         ),
       ),
       floatingActionButton: FloatingActionButton(

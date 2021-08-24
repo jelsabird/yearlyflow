@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 import 'package:yearly_flow/domain/src/entity/inspiration.dart';
+import 'package:yearly_flow/presentation/src/core/app_color_scheme.dart';
 import 'package:yearly_flow/presentation/src/entity/month_section.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/view_card/view_card_page.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/yearly_flow_controller.dart';
@@ -40,8 +41,8 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
   }
 
   Future<void> _addCard(Month month) async {
-    await Navigator.of(context).push(
-        _createRoute(const AddCardPage(), RouteSettings(arguments: month)));
+    await Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+    AddCardPage()));
 
     _loadData();
 
@@ -50,12 +51,21 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
 
   Future<void> _viewCard(Inspiration inspiration) async {
     await Navigator.of(context).push(_createRoute(
-        const ViewCardPage(), RouteSettings(arguments: [inspiration,
-        _controller.inspirations.indexOf(inspiration)])));
+        const ViewCardPage(),
+        RouteSettings(arguments: [
+          inspiration,
+          _controller.inspirations.indexOf(inspiration)
+        ])));
 
     _loadData();
 
     return Future.value();
+  }
+
+  void _deleteCard(Inspiration inspiration) {
+    _controller.deleteInspiration(inspiration);
+
+    _loadData();
   }
 
   Route _createRoute(Widget destination, RouteSettings routeSettings) {
@@ -78,23 +88,51 @@ class _YearlyFlowPageState extends State<YearlyFlowPage> {
         return StickyHeader(
           header: MonthHeader(currentMonth.title),
           content: Container(
-              child: GridView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: currentMonthCards.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1,
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: currentMonthCards.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1,
+              ),
+              itemBuilder: (contxt, indx) {
+                var inspiration = currentMonthCards[indx];
+                return Dismissible(
+                  key: Key("${inspiration.title} + $indx"),
+                  onDismissed: (direction) {
+                    setState(() {
+                      _deleteCard(inspiration);
+                      currentMonthCards.remove(inspiration);
+                    });
+                  },
+                  background: Row(
+                    children: [
+                      Flexible(
+                        flex: 1,
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Icon(Icons.delete, color: AppColorScheme
+                                .backgroundDarkForeground,),
+                          )
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Text(''),
+                      ),
+                    ]
+                  ),
+                  child: Hero(
+                    tag: "${inspiration.title} + $indx",
+                    child: InspirationCard(
+                      currentMonthCards[indx],
+                      onTap: () => _viewCard(inspiration),
+                    ),
+                  ),
+                );
+              },
             ),
-            itemBuilder: (contxt, indx) {
-              return Hero(
-                  tag: "${currentMonthCards[indx].title} + $indx",
-                  child: InspirationCard(
-                    currentMonthCards[indx],
-                    onTap: () => _viewCard(currentMonthCards[indx]),
-                  ));
-            },
-          )),
+          ),
         );
       },
     );

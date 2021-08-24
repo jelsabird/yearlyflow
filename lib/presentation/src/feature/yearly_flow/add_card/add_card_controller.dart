@@ -4,6 +4,6 @@ import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 class AddCardController{
 
   void save(Inspiration inspiration) {
-    DataController.instance.saveInspiration(inspiration);
+    DataController.instance.save(inspiration);
   }
 }

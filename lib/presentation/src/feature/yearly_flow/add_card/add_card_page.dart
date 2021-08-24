@@ -112,8 +112,6 @@ class _AddCardPageState extends State<AddCardPage> {
 
   @override
   Widget build(BuildContext context) {
-    _inspiration.month = ModalRoute.of(context)!.settings.arguments as Month;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -124,10 +122,6 @@ class _AddCardPageState extends State<AddCardPage> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            Text(
-              Strings.selectTimeOfMonth,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
             ButtonBar(
               children: <Widget>[
                 TextButton(
