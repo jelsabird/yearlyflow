@@ -3,7 +3,8 @@ import 'package:yearly_flow/domain/src/entity/inspiration.dart';
 import 'package:yearly_flow/presentation/src/widgets/card_content.dart';
 
 class InspirationCard extends StatefulWidget {
-  InspirationCard(this.inspiration, {this.isEditing = false, this.onTap});
+  InspirationCard(this.inspiration,
+      {this.isEditing = false, this.onTap});
 
   final Inspiration inspiration;
   final bool isEditing;

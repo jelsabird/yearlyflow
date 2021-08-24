@@ -48,4 +48,8 @@ class YearlyFlowController {
     inspirations.addAll(recipes);
     inspirations.addAll(birthdays);
   }
+
+  void deleteInspiration(Inspiration inspiration){
+    _dataController.delete(inspiration);
+  }
 }

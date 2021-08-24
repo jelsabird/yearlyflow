@@ -40,7 +40,7 @@ class DataController{
     return Future.value();
   }
 
-  void saveInspiration(Inspiration inspiration){
+  void save(Inspiration inspiration){
     switch (inspiration.inspirationType) {
       case InspirationType.Note:
         _addNote(inspiration);
@@ -71,5 +71,22 @@ class DataController{
 
   void _addBirthday(Inspiration birthday){
     birthdayBox.put(birthday.key, birthday as Birthday);
+  }
+
+  void delete(Inspiration inspiration){
+    switch (inspiration.inspirationType) {
+      case InspirationType.Note:
+        noteBox.delete(inspiration.key);
+        break;
+      case InspirationType.BulletList:
+        bulletListBox.delete(inspiration.key);
+        break;
+      case InspirationType.Recipe:
+        recipeBox.delete(inspiration.key);
+        break;
+      case InspirationType.Birthday:
+        birthdayBox.delete(inspiration.key);
+        break;
+    }
   }
 }
