@@ -8,9 +8,12 @@ import 'package:yearly_flow/domain/src/entity/recipe.dart';
 import 'package:yearly_flow/domain/src/entity/enums/inspiration_type.dart';
 import 'package:yearly_flow/domain/src/entity/enums/month.dart';
 import 'package:yearly_flow/domain/src/entity/enums/time_of_month.dart';
+import 'package:yearly_flow/domain/src/util/month_helper.dart';
 import 'package:yearly_flow/presentation/src/core/app_color_scheme.dart';
 import 'package:yearly_flow/presentation/src/core/strings.dart';
 import 'package:yearly_flow/presentation/src/feature/yearly_flow/add_card/add_card_controller.dart';
+import 'package:yearly_flow/presentation/src/util/event_bus_utils.dart';
+import 'package:yearly_flow/presentation/src/util/events/birthday_date_picked_event.dart';
 import 'package:yearly_flow/presentation/src/widgets/inspiration_card.dart';
 
 class AddCardPage extends StatefulWidget {
@@ -32,6 +35,13 @@ class _AddCardPageState extends State<AddCardPage> {
 
     _controller = AddCardController();
     _inspiration = Note(key: uuid.v4());
+
+    EventBusUtils.instance.on<BirthdayDatePickedEvent>().listen((event) {
+      setState(() {
+        _inspiration.month = MonthHelper.getMonth(event.date);
+        _inspiration.timeOfMonth = MonthHelper.getTimeOfMonth(event.date);
+      });
+    });
   }
 
   void _setInspirationType(Inspiration newContent) {
@@ -132,8 +142,8 @@ class _AddCardPageState extends State<AddCardPage> {
                   style: _selectedStyle(isSelectedType(InspirationType.Note)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(BulletList(key:
-                  UniqueKey().toString())),
+                  onPressed: () => _setInspirationType(
+                      BulletList(key: UniqueKey().toString())),
                   child: Text(InspirationType.BulletList.displayTitle),
                   style: _selectedStyle(
                       isSelectedType(InspirationType.BulletList)),
@@ -144,9 +154,8 @@ class _AddCardPageState extends State<AddCardPage> {
                   style: _selectedStyle(isSelectedType(InspirationType.Recipe)),
                 ),
                 TextButton(
-                  onPressed: () => _setInspirationType(Birthday(key: uuid.v4(),
-                      date:
-                  DateTime.now())),
+                  onPressed: () => _setInspirationType(
+                      Birthday(key: uuid.v4(), date: DateTime.now())),
                   child: Text(InspirationType.Birthday.displayTitle),
                   style:
                       _selectedStyle(isSelectedType(InspirationType.Birthday)),
