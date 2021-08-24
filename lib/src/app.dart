@@ -1,0 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:yearly_flow/presentation/src/core/styles.dart';
+import 'package:yearly_flow/src/ui/inspiration_list.dart';
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeDataConfig.configure(),
+      home: Scaffold(
+        body: InspirationList(),
+      ),
+    );
+  }
+}

@@ -36,6 +36,7 @@ dependencies:
   hive_flutter: ^1.1.0
   path_provider: ^2.0.2
   event_bus: ^2.0.0
+  rxdart: ^0.27.1
 
 dev_dependencies:
   flutter_test:
