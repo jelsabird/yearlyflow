@@ -1,101 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:yearly_flow/domain/src/entity/enums/inspiration_type.dart';
-import 'package:yearly_flow/domain/src/entity/enums/month.dart';
-import 'package:yearly_flow/domain/src/entity/enums/time_of_month.dart';
+import 'package:yearly_flow/src/models/birthday_model.dart';
+import 'package:yearly_flow/src/models/bullet_list_model.dart';
+import 'package:yearly_flow/src/models/enums/inspiration_type.dart';
+import 'package:yearly_flow/src/models/inspiration_model.dart';
+import 'package:yearly_flow/src/models/note_model.dart';
+import 'package:yearly_flow/src/models/recipe_model.dart';
+import 'package:yearly_flow/src/ui/core/strings.dart';
+import 'package:yearly_flow/src/ui/inspiration_edit.dart';
+import 'package:yearly_flow/src/ui/widgets/birthday_card_content.dart';
+import 'package:yearly_flow/src/ui/widgets/bullet_list_card_content.dart';
+import 'package:yearly_flow/src/ui/widgets/inspiration_card.dart';
+import 'package:yearly_flow/src/ui/widgets/note_card_content.dart';
+import 'package:yearly_flow/src/ui/widgets/recipe_card_content.dart';
 
 class InspirationDetail extends StatefulWidget {
-  final String dbKey;
-  final InspirationType inspirationType;
-  final Month month;
-  final TimeOfMonth timeOfMonth;
-  final String title;
+  final InspirationModel model;
+  final int index;
 
-  InspirationDetail({
-    required this.dbKey,
-    required this.inspirationType,
-    required this.month,
-    required this.timeOfMonth,
-    required this.title,
-  });
+  const InspirationDetail({
+    Key? key,
+    required this.model,
+    required this.index,
+  }) : super(key: key);
 
   @override
-  InspirationDetailState createState() {
-    return InspirationDetailState(
-      dbKey: dbKey,
-      inspirationType: inspirationType,
-      month: month,
-      timeOfMonth: timeOfMonth,
-      title: title,
+  _InspirationDetailState createState() {
+    return _InspirationDetailState(
+      model: model,
+      index: index,
     );
   }
 }
 
-class InspirationDetailState extends State<InspirationDetail> {
-  final String dbKey;
-  final InspirationType inspirationType;
-  final Month month;
-  final TimeOfMonth timeOfMonth;
-  final String title;
+class _InspirationDetailState extends State<InspirationDetail> {
+  final InspirationModel model;
+  final int index;
 
-  InspirationDetailState({
-    required this.dbKey,
-    required this.inspirationType,
-    required this.month,
-    required this.timeOfMonth,
-    required this.title,
+  _InspirationDetailState({
+    required this.model,
+    required this.index,
   });
 
+  Future<void> _editCard() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute<InspirationEdit>(
+          builder: (BuildContext context) => InspirationEdit(model: model)),
+    );
+
+    setState(() {});
+
+    return Future.value();
+  }
+
+  Widget buildContent() {
+    switch (model.inspirationType) {
+      case InspirationType.Note:
+        return NoteCardContent(
+          note: model as NoteModel,
+        );
+      case InspirationType.Birthday:
+        return BirthdayCardContent(
+          birthday: model as BirthdayModel,
+        );
+      case InspirationType.BulletList:
+        return BulletListCardContent(
+          bulletList: model as BulletListModel,
+        );
+      case InspirationType.Recipe:
+        return RecipeCardContent(
+          recipe: model as RecipeModel,
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        top: false,
-        bottom: false,
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool
-        innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                expandedHeight: 200.0,
-                floating: false,
-                pinned: true,
-                elevation: 0.0,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Card(),
-                ),
-              ),
-            ];
-          },
-          body: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(margin: EdgeInsets.only(top: 5.0)),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Container(margin: EdgeInsets.only(top: 8.0, bottom: 8.0)),
-                Row(
-                  children: <Widget>[
-                    Icon(Icons.delete, color: Colors.red,),
-                    Container(margin: EdgeInsets.only(left: 1.0, right: 1.0),),
-                    Text(timeOfMonth.displayString, style: TextStyle(fontSize: 18.0),),
-                    Container(margin: EdgeInsets.only(left: 10.0, right: 10.0),),
-                    Text(month.displayTitle, style: TextStyle(fontSize: 18.0),),
-                  ],
-                ),
-                Container(margin: EdgeInsets.only(top: 8.0, bottom: 8.0),),
-                Text('(Content)')
-              ],
-            ),
+      appBar: AppBar(
+        title: Text(Strings.pageTitle_viewCard),
+      ),
+      body: Container(
+        width: double.infinity,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Hero(
+            tag: "${model.title} + $index",
+            child: InspirationCard(model),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _editCard(),
+        child: const Icon(Icons.edit),
       ),
     );
   }
