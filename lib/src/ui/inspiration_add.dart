@@ -24,14 +24,14 @@ class InspirationAdd extends StatefulWidget {
 
 class _InspirationAddState extends State<InspirationAdd> {
   _InspirationAddState() : super();
-  late InspirationAddBloc _bloc;
+  late IInspirationAddBloc _bloc;
   late StreamSubscription _subscription;
 
   @override
   void initState() {
     super.initState();
 
-    _bloc = locator.get<InspirationAddBloc>();
+    _bloc = locator.get<IInspirationAddBloc>();
 
     _subscription = EventBusUtils.instance.on<BirthdayDatePickedEvent>()
         .listen(_updateModel);

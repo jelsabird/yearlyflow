@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -5,7 +7,9 @@ import 'package:yearly_flow/src/models/enums/month.dart';
 import 'package:yearly_flow/src/models/inspiration_model.dart';
 import 'package:yearly_flow/src/ui/core/app_color_scheme.dart';
 import 'package:yearly_flow/src/ui/core/strings.dart';
+import 'package:yearly_flow/src/ui/events/Inspiration_created_event.dart';
 import 'package:yearly_flow/src/ui/inspiration_add.dart';
+import 'package:yearly_flow/src/ui/util/event_bus_utils.dart';
 import 'package:yearly_flow/src/ui/widgets/inspiration_card.dart';
 import 'package:yearly_flow/src/ui/widgets/month_header.dart';
 import 'package:yearly_flow/src/models/item_model.dart';
@@ -18,6 +22,7 @@ class InspirationList extends StatefulWidget {
 }
 
 class _InspirationListState extends State<InspirationList> {
+  late StreamSubscription _subscribtion;
   late AutoScrollController _autoScrollController;
   final int _currentMonthIndex = DateTime.now().month - 1;
 
@@ -33,17 +38,25 @@ class _InspirationListState extends State<InspirationList> {
 
     bloc.fetchAllInspirations();
 
-    _scrollToIndex();
+    _subscribtion = EventBusUtils.instance.on<CardUpdatedEvent>().listen
+      (_scrollToCard);
+
+    _scrollToMonth();
+  }
+
+  void _scrollToCard(CardUpdatedEvent event) {
+    _scrollToMonth(index: event.month.index);
   }
 
   @override
   void dispose() {
     _autoScrollController.dispose();
+    _subscribtion.cancel();
     bloc.dispose();
     super.dispose();
   }
 
-  void _scrollToIndex({int? index}) {
+  void _scrollToMonth({int? index}) {
     _autoScrollController.scrollToIndex(index ?? _currentMonthIndex,
         preferPosition: AutoScrollPosition.begin);
   }
@@ -60,8 +73,6 @@ class _InspirationListState extends State<InspirationList> {
     );
 
     bloc.fetchAllInspirations();
-
-    _scrollToIndex(index: inspiration.month.index);
   }
 
   Future<void> _addCard() async {
