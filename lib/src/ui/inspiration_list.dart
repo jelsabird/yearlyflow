@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:yearly_flow/src/models/enums/month.dart';
 import 'package:yearly_flow/src/models/inspiration_model.dart';
 import 'package:yearly_flow/src/ui/core/app_color_scheme.dart';
@@ -17,16 +18,34 @@ class InspirationList extends StatefulWidget {
 }
 
 class _InspirationListState extends State<InspirationList> {
+  late AutoScrollController _autoScrollController;
+  final int _currentMonthIndex = DateTime.now().month - 1;
+
   @override
   void initState() {
     super.initState();
+
+    _autoScrollController = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical,
+        suggestedRowHeight: 200);
+
     bloc.fetchAllInspirations();
+
+    _scrollToIndex();
   }
 
   @override
   void dispose() {
+    _autoScrollController.dispose();
     bloc.dispose();
     super.dispose();
+  }
+
+  void _scrollToIndex() {
+    _autoScrollController.scrollToIndex(_currentMonthIndex,
+        preferPosition: AutoScrollPosition.begin);
   }
 
   Future<void> _openDetailPage(InspirationModel inspiration, int index) async {
@@ -44,8 +63,8 @@ class _InspirationListState extends State<InspirationList> {
   }
 
   Future<void> _addCard() async {
-    await Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-        InspirationAdd()));
+    await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => InspirationAdd()));
 
     bloc.fetchAllInspirations();
   }
@@ -54,6 +73,75 @@ class _InspirationListState extends State<InspirationList> {
     bloc.delete(inspiration);
     bloc.fetchAllInspirations();
   }
+
+  Widget buildListWithHeaders(AsyncSnapshot<ItemModel> snapshot) {
+    return ListView.builder(
+      controller: _autoScrollController,
+      itemCount: Month.values.length,
+      itemBuilder: (monthContext, monthIndex) {
+        Month currentMonth = Month.values[monthIndex];
+        List<InspirationModel> currentMonthCards =
+            bloc.monthMap[currentMonth] ?? <InspirationModel>[];
+        return _wrapScrollTag(
+          index: monthIndex,
+          child: StickyHeader(
+            header: MonthHeader(currentMonth.displayTitle),
+            content: Container(
+              child: GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: currentMonthCards.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (context, index) {
+                  var inspiration = currentMonthCards[index];
+                  return Dismissible(
+                    key: Key("${inspiration.title} + $index"),
+                    onDismissed: (direction) {
+                      setState(() {
+                        _deleteCard(inspiration);
+                        currentMonthCards.remove(inspiration);
+                      });
+                    },
+                    background: Row(children: [
+                      Flexible(
+                          flex: 1,
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Icon(
+                              Icons.delete,
+                              color: AppColorScheme.backgroundDarkForeground,
+                            ),
+                          )),
+                      Flexible(
+                        flex: 1,
+                        child: Text(''),
+                      ),
+                    ]),
+                    child: Hero(
+                      tag: "${inspiration.title} + $index",
+                      child: InspirationCard(
+                        currentMonthCards[index],
+                        onTap: () => _openDetailPage(inspiration, monthIndex),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _wrapScrollTag({required int index, required Widget child}) =>
+      AutoScrollTag(
+          key: ValueKey<int>(index),
+          controller: _autoScrollController,
+          index: index,
+          child: child);
 
   @override
   Widget build(BuildContext context) {
@@ -76,64 +164,6 @@ class _InspirationListState extends State<InspirationList> {
         onPressed: () => _addCard(),
         child: const Icon(Icons.add),
       ),
-    );
-  }
-
-  Widget buildListWithHeaders(AsyncSnapshot<ItemModel> snapshot) {
-    return ListView.builder(
-      itemCount: Month.values.length,
-      itemBuilder: (context, index) {
-        Month currentMonth = Month.values[index];
-        List<InspirationModel> currentMonthCards = bloc
-            .monthMap[currentMonth] ?? <InspirationModel>[];
-        return StickyHeader(
-          header: MonthHeader(currentMonth.displayTitle),
-          content: Container(
-            child: GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: currentMonthCards.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemBuilder: (contxt, indx) {
-                var inspiration = currentMonthCards[indx];
-                return Dismissible(
-                  key: Key("${inspiration.title} + $indx"),
-                  onDismissed: (direction) {
-                    setState(() {
-                      _deleteCard(inspiration);
-                      currentMonthCards.remove(inspiration);
-                    });
-                  },
-                  background: Row(children: [
-                    Flexible(
-                        flex: 1,
-                        child: Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Icon(
-                            Icons.delete,
-                            color: AppColorScheme.backgroundDarkForeground,
-                          ),
-                        )),
-                    Flexible(
-                      flex: 1,
-                      child: Text(''),
-                    ),
-                  ]),
-                  child: Hero(
-                    tag: "${inspiration.title} + $indx",
-                    child: InspirationCard(
-                      currentMonthCards[indx],
-                      onTap: () => _openDetailPage(inspiration, index),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        );
-      },
     );
   }
 }
