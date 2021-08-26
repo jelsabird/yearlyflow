@@ -97,11 +97,18 @@ unlinked_spec.ds
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
 **/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/Debug.xcconfig
+**/ios/Flutter/Release.xcconfig
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Runner.xcodeproj/project.pbxproj
+**/ios/Runner.xcworkspace/contents.xcworkspacedata
 
 # macOS
+**/macos/Flutter/Flutter-Debug.xcconfig
+**/macos/Flutter/Flutter-Release.xcconfig
 **/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Podfile
 
 # Coverage
 coverage/
