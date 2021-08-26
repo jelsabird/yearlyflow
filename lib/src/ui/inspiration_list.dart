@@ -43,8 +43,8 @@ class _InspirationListState extends State<InspirationList> {
     super.dispose();
   }
 
-  void _scrollToIndex() {
-    _autoScrollController.scrollToIndex(_currentMonthIndex,
+  void _scrollToIndex({int? index}) {
+    _autoScrollController.scrollToIndex(index ?? _currentMonthIndex,
         preferPosition: AutoScrollPosition.begin);
   }
 
@@ -60,6 +60,8 @@ class _InspirationListState extends State<InspirationList> {
     );
 
     bloc.fetchAllInspirations();
+
+    _scrollToIndex(index: inspiration.month.index);
   }
 
   Future<void> _addCard() async {
