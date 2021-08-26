@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:yearly_flow/presentation/src/feature/yearly_flow/splash/splash_page.dart';
-import 'package:yearly_flow/presentation/src/core/styles.dart';
+import 'package:yearly_flow/service_locator.dart';
+import 'package:yearly_flow/src/ui/splash.dart';
+import 'package:yearly_flow/src/ui/core/styles.dart';
 
 void main() {
+  setupLocator();
   runApp(const App());
 }
 
@@ -15,7 +17,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Yearly flow',
       theme: ThemeDataConfig.configure(),
-      home: const SplashPage(),
+      home: const Splash(),
     );
   }
 }
