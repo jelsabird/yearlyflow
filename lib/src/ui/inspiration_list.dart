@@ -136,7 +136,8 @@ class _InspirationListState extends State<InspirationList> {
                       tag: "${inspiration.title} + $index",
                       child: InspirationCard(
                         currentMonthCards[index],
-                        onTap: () => _openDetailPage(inspiration, monthIndex),
+                        onTap: () => _openDetailPage(inspiration,
+                            index),
                       ),
                     ),
                   );
