@@ -38,6 +38,7 @@ dependencies:
   event_bus: ^2.0.0
   rxdart: ^0.27.1
   get_it: ^7.2.0
+  mockito: ^5.0.15
 
 dev_dependencies:
   flutter_test:

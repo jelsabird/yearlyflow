@@ -17,8 +17,8 @@ abstract class IInspirationListBloc {
   dispose();
 }
 
-class InspirationsBloc implements IInspirationListBloc {
-  InspirationsBloc(this._repository, this._inspirationsFetcher);
+class InspirationListBloc implements IInspirationListBloc {
+  InspirationListBloc(this._repository, this._inspirationsFetcher);
 
   final IRepository _repository;
   final PublishSubject<ItemModel> _inspirationsFetcher;

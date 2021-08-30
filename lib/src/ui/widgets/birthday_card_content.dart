@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/src/models/birthday_model.dart';
 import 'package:yearly_flow/src/ui/core/styles.dart';
-import 'package:yearly_flow/src/ui/util/event_bus_utils.dart';
+import 'package:yearly_flow/src/util/event_bus_utils.dart';
 import 'package:yearly_flow/src/ui/events/birthday_date_picked_event.dart';
 import 'package:yearly_flow/src/ui/widgets/date_text_field.dart';
 import 'package:yearly_flow/src/ui/core/strings.dart';
