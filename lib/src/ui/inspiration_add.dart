@@ -6,7 +6,7 @@ import 'package:yearly_flow/src/blocs/inspiration_add_bloc.dart';
 import 'package:yearly_flow/src/models/enums/inspiration_type.dart';
 import 'package:yearly_flow/src/models/enums/month.dart';
 import 'package:yearly_flow/src/models/enums/time_of_month.dart';
-import 'package:yearly_flow/src/ui/util/event_bus_utils.dart';
+import 'package:yearly_flow/src/util/event_bus_utils.dart';
 import 'package:yearly_flow/src/ui/util/month_helper.dart';
 import 'package:yearly_flow/src/ui/widgets/inspiration_card.dart';
 import 'package:yearly_flow/src/ui/core/app_color_scheme.dart';

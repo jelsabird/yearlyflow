@@ -10,7 +10,6 @@ class SplashBloc implements ISplashBloc {
   IDataController _dataController;
 
   Future<void> init() async {
-    await _dataController.initDatabase();
-    return Future.value();
+    return await _dataController.initDatabase();
   }
 }

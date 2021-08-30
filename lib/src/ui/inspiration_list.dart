@@ -9,7 +9,7 @@ import 'package:yearly_flow/src/ui/core/app_color_scheme.dart';
 import 'package:yearly_flow/src/ui/core/strings.dart';
 import 'package:yearly_flow/src/ui/events/Inspiration_created_event.dart';
 import 'package:yearly_flow/src/ui/inspiration_add.dart';
-import 'package:yearly_flow/src/ui/util/event_bus_utils.dart';
+import 'package:yearly_flow/src/util/event_bus_utils.dart';
 import 'package:yearly_flow/src/ui/widgets/inspiration_card.dart';
 import 'package:yearly_flow/src/ui/widgets/month_header.dart';
 import 'package:yearly_flow/src/models/item_model.dart';

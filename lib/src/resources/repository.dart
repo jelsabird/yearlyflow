@@ -1,4 +1,3 @@
-import 'package:yearly_flow/src/models/enums/month.dart';
 import 'package:yearly_flow/src/models/inspiration_model.dart';
 import 'package:yearly_flow/src/resources/data_controller.dart';
 import 'package:yearly_flow/src/models/item_model.dart';
@@ -14,7 +13,7 @@ class Repository implements IRepository {
 
   IDataController _dataController;
 
-  Future<ItemModel> fetchAllInspirations() => _dataController
+  Future<ItemModel> fetchAllInspirations() async => _dataController
       .fetchAllInspirations();
 
   void delete(InspirationModel inspiration){

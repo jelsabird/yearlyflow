@@ -22,7 +22,7 @@ void setupLocator() {
           (model, param2) => InspirationEditBloc(locator<IDataController>(),
               model));
   locator.registerFactory<IInspirationListBloc>(
-      () => InspirationsBloc(locator<IRepository>(), PublishSubject<ItemModel>
+      () => InspirationListBloc(locator<IRepository>(), PublishSubject<ItemModel>
         ()));
   locator.registerFactory<ISplashBloc>(() => SplashBloc(locator<IDataController>()));
 }

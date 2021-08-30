@@ -2,7 +2,7 @@ import 'package:yearly_flow/src/models/inspiration_model.dart';
 import 'package:yearly_flow/src/models/note_model.dart';
 import 'package:yearly_flow/src/resources/data_controller.dart';
 import 'package:yearly_flow/src/ui/events/Inspiration_created_event.dart';
-import 'package:yearly_flow/src/ui/util/event_bus_utils.dart';
+import 'package:yearly_flow/src/util/event_bus_utils.dart';
 
 abstract class IInspirationEditBloc {
   void save();
