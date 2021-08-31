@@ -8,13 +8,13 @@ import 'package:yearly_flow/src/models/inspiration_model.dart';
 import 'package:yearly_flow/src/ui/core/app_color_scheme.dart';
 import 'package:yearly_flow/src/ui/core/strings.dart';
 import 'package:yearly_flow/src/ui/events/Inspiration_created_event.dart';
-import 'package:yearly_flow/src/ui/inspiration_add.dart';
+import 'package:yearly_flow/src/ui/add.dart';
 import 'package:yearly_flow/src/util/event_bus_utils.dart';
 import 'package:yearly_flow/src/ui/widgets/inspiration_card.dart';
 import 'package:yearly_flow/src/ui/widgets/month_header.dart';
-import 'package:yearly_flow/src/models/item_model.dart';
-import 'package:yearly_flow/src/blocs/inspiration_list_bloc.dart';
-import 'package:yearly_flow/src/ui/inspiration_detail.dart';
+import 'package:yearly_flow/src/models/month_section.dart';
+import 'package:yearly_flow/src/blocs/list_bloc.dart';
+import 'package:yearly_flow/src/ui/detail.dart';
 
 class InspirationList extends StatefulWidget {
   @override
@@ -22,7 +22,7 @@ class InspirationList extends StatefulWidget {
 }
 
 class _InspirationListState extends State<InspirationList> {
-  late StreamSubscription _subscribtion;
+  late StreamSubscription _subscription;
   late AutoScrollController _autoScrollController;
   final int _currentMonthIndex = DateTime.now().month - 1;
 
@@ -38,8 +38,8 @@ class _InspirationListState extends State<InspirationList> {
 
     bloc.fetchAllInspirations();
 
-    _subscribtion = EventBusUtils.instance.on<CardUpdatedEvent>().listen
-      (_scrollToCard);
+    _subscription =
+        EventBusUtils.instance.on<CardUpdatedEvent>().listen(_scrollToCard);
 
     _scrollToMonth();
   }
@@ -51,7 +51,7 @@ class _InspirationListState extends State<InspirationList> {
   @override
   void dispose() {
     _autoScrollController.dispose();
-    _subscribtion.cancel();
+    _subscription.cancel();
     bloc.dispose();
     super.dispose();
   }
@@ -87,14 +87,15 @@ class _InspirationListState extends State<InspirationList> {
     bloc.fetchAllInspirations();
   }
 
-  Widget buildListWithHeaders(AsyncSnapshot<ItemModel> snapshot) {
+  Widget buildListWithHeaders(AsyncSnapshot<List<MonthSection>> snapshot) {
     return ListView.builder(
       controller: _autoScrollController,
       itemCount: Month.values.length,
       itemBuilder: (monthContext, monthIndex) {
         Month currentMonth = Month.values[monthIndex];
-        List<InspirationModel> currentMonthCards =
-            bloc.monthMap[currentMonth] ?? <InspirationModel>[];
+        List<InspirationModel> currentMonthCards = snapshot.data!
+            .singleWhere((monthSection) => monthSection.month == currentMonth)
+            .inspirations;
         return _wrapScrollTag(
           index: monthIndex,
           child: StickyHeader(
@@ -136,8 +137,7 @@ class _InspirationListState extends State<InspirationList> {
                       tag: "${inspiration.title} + $index",
                       child: InspirationCard(
                         currentMonthCards[index],
-                        onTap: () => _openDetailPage(inspiration,
-                            index),
+                        onTap: () => _openDetailPage(inspiration, index),
                       ),
                     ),
                   );
@@ -165,7 +165,7 @@ class _InspirationListState extends State<InspirationList> {
       ),
       body: StreamBuilder(
         stream: bloc.allInspirations,
-        builder: (context, AsyncSnapshot<ItemModel> snapshot) {
+        builder: (context, AsyncSnapshot<List<MonthSection>> snapshot) {
           if (snapshot.hasData) {
             return buildListWithHeaders(snapshot);
           } else if (snapshot.hasError) {

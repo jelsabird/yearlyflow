@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/service_locator.dart';
-import 'package:yearly_flow/src/blocs/inspiration_add_bloc.dart';
+import 'package:yearly_flow/src/blocs/add_bloc.dart';
 import 'package:yearly_flow/src/models/enums/inspiration_type.dart';
 import 'package:yearly_flow/src/models/enums/month.dart';
 import 'package:yearly_flow/src/models/enums/time_of_month.dart';
@@ -69,7 +69,7 @@ class _InspirationAddState extends State<InspirationAdd> {
   }
 
   void _save() async {
-    _bloc.save();
+    _bloc.add();
 
     Navigator.pop(context);
   }

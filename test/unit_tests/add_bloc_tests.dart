@@ -1,8 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:uuid/uuid.dart';
 
-import 'package:yearly_flow/src/blocs/inspiration_add_bloc.dart';
+import 'package:yearly_flow/src/blocs/add_bloc.dart';
 import 'package:yearly_flow/src/models/bullet_list_model.dart';
 import 'package:yearly_flow/src/models/enums/inspiration_type.dart';
 import 'package:yearly_flow/src/models/note_model.dart';
@@ -12,25 +11,26 @@ import 'mock_classes.dart';
 void inspirationAddBlocTests() {
   group("inspirationAddBloc", () {
     late InspirationAddBloc sut;
-    late MockDataController mockDataController;
+    late MockInspirationService mockInspirationService;
+    late MockEventBus mockEventBus;
 
     setUp(() {
-      mockDataController = MockDataController();
+      mockInspirationService = MockInspirationService();
+      mockEventBus = MockEventBus();
 
-      sut = InspirationAddBloc(mockDataController, Uuid());
+      sut = InspirationAddBloc(mockInspirationService, mockEventBus);
     });
 
     tearDown(() {
-      reset(mockDataController);
+      reset(mockInspirationService);
     });
 
-    test("should save model with key", () {
+    test("should add model", () {
       sut.model = NoteModel();
 
-      sut.save();
+      sut.add();
 
-      verify(mockDataController.save(sut.model)).called(1);
-      expect(sut.model.key, isNotNull);
+      verify(mockInspirationService.add(sut.model)).called(1);
     });
 
     test("should change to new inspiration type", () {

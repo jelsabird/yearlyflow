@@ -1,28 +1,30 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:get_it/get_it.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:uuid/uuid.dart';
-import 'package:yearly_flow/src/blocs/inspiration_add_bloc.dart';
-import 'package:yearly_flow/src/blocs/inspiration_edit_bloc.dart';
-import 'package:yearly_flow/src/blocs/inspiration_list_bloc.dart';
+import 'package:yearly_flow/src/blocs/add_bloc.dart';
+import 'package:yearly_flow/src/blocs/edit_bloc.dart';
+import 'package:yearly_flow/src/blocs/list_bloc.dart';
 import 'package:yearly_flow/src/blocs/splash_bloc.dart';
 import 'package:yearly_flow/src/models/inspiration_model.dart';
-import 'package:yearly_flow/src/models/item_model.dart';
-import 'package:yearly_flow/src/resources/data_controller.dart';
+import 'package:yearly_flow/src/resources/inspiration_service.dart';
 import 'package:yearly_flow/src/resources/repository.dart';
+import 'package:yearly_flow/src/util/event_bus_utils.dart';
 
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton<IDataController>(() => DataController.instance);
-  locator.registerLazySingleton<IRepository>(() => Repository(locator<IDataController>()));
+  locator.registerLazySingleton<EventBus>(() => EventBusUtils.instance);
+  locator.registerLazySingleton<IInspirationService>(
+      () => InspirationService.instance);
+  locator.registerLazySingleton<IRepository>(
+      () => Repository(locator<IInspirationService>()));
 
-  locator.registerFactory<IInspirationAddBloc>(
-      () => InspirationAddBloc(locator<IDataController>(), Uuid()));
+  locator.registerFactory<IInspirationAddBloc>(() =>
+      InspirationAddBloc(locator<IInspirationService>(), locator<EventBus>()));
   locator.registerFactoryParam<IInspirationEditBloc, InspirationModel, void>(
-          (model, param2) => InspirationEditBloc(locator<IDataController>(),
-              model));
-  locator.registerFactory<IInspirationListBloc>(
-      () => InspirationListBloc(locator<IRepository>(), PublishSubject<ItemModel>
-        ()));
-  locator.registerFactory<ISplashBloc>(() => SplashBloc(locator<IDataController>()));
+      (model, param2) => InspirationEditBloc(
+          model, locator<IInspirationService>(), locator<EventBus>()));
+  locator.registerFactory<IInspirationListBloc>(() =>
+      InspirationListBloc(locator<IRepository>()));
+  locator.registerFactory<ISplashBloc>(
+      () => SplashBloc(locator<IInspirationService>()));
 }

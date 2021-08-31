@@ -1,50 +1,65 @@
-import 'package:uuid/uuid.dart';
+import 'package:event_bus/event_bus.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:yearly_flow/src/models/birthday_model.dart';
 import 'package:yearly_flow/src/models/bullet_list_model.dart';
 import 'package:yearly_flow/src/models/enums/inspiration_type.dart';
 import 'package:yearly_flow/src/models/inspiration_model.dart';
 import 'package:yearly_flow/src/models/note_model.dart';
 import 'package:yearly_flow/src/models/recipe_model.dart';
-import 'package:yearly_flow/src/resources/data_controller.dart';
+import 'package:yearly_flow/src/resources/inspiration_service.dart';
 import 'package:yearly_flow/src/ui/events/Inspiration_created_event.dart';
-import 'package:yearly_flow/src/util/event_bus_utils.dart';
 
 abstract class IInspirationAddBloc {
   InspirationModel model = NoteModel();
 
-  save();
+  Stream<InspirationModel> get inspirationStream;
+
+  add();
 
   changeTo(InspirationType inspirationType);
+
+  dispose();
 }
 
 class InspirationAddBloc implements IInspirationAddBloc {
-  InspirationAddBloc(this._service, this._uuid);
+  InspirationAddBloc(
+      this._service,
+      this._eventBus)
+      : _inspirationSubject = BehaviorSubject<InspirationModel>();
 
-  IDataController _service;
-  Uuid _uuid;
   InspirationModel model = NoteModel();
+  final IInspirationService _service;
+  final EventBus _eventBus;
+  final BehaviorSubject<InspirationModel> _inspirationSubject;
 
-  void save() {
-    model.key = _uuid.v4();
-    _service.save(model);
+  Stream<InspirationModel> get inspirationStream => _inspirationSubject.stream;
 
-    EventBusUtils.instance.fire(CardUpdatedEvent(model.month));
+  void add() {
+    _inspirationSubject.add(model);
+
+    _service.add(model);
+
+    _eventBus.fire(CardUpdatedEvent(model.month));
   }
 
   void changeTo(InspirationType inspirationType) {
     switch (inspirationType) {
       case InspirationType.Note:
-        model = NoteModel(key: _uuid.v4());
+        model = NoteModel();
         break;
       case InspirationType.BulletList:
-        model = BulletListModel(key: _uuid.v4());
+        model = BulletListModel();
         break;
       case InspirationType.Recipe:
-        model = RecipeModel(key: _uuid.v4());
+        model = RecipeModel();
         break;
       case InspirationType.Birthday:
-        model = BirthdayModel(key: _uuid.v4(), date: DateTime.now());
+        model = BirthdayModel(date: DateTime.now());
         break;
     }
+  }
+
+  void dispose() {
+    _inspirationSubject.close();
   }
 }

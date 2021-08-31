@@ -6,7 +6,7 @@ import 'package:yearly_flow/src/models/inspiration_model.dart';
 import 'package:yearly_flow/src/models/note_model.dart';
 import 'package:yearly_flow/src/models/recipe_model.dart';
 import 'package:yearly_flow/src/ui/core/strings.dart';
-import 'package:yearly_flow/src/ui/inspiration_edit.dart';
+import 'package:yearly_flow/src/ui/edit.dart';
 import 'package:yearly_flow/src/ui/widgets/birthday_card_content.dart';
 import 'package:yearly_flow/src/ui/widgets/bullet_list_card_content.dart';
 import 'package:yearly_flow/src/ui/widgets/inspiration_card.dart';

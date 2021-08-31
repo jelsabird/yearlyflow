@@ -1,22 +1,22 @@
 import 'package:yearly_flow/src/models/inspiration_model.dart';
-import 'package:yearly_flow/src/resources/data_controller.dart';
-import 'package:yearly_flow/src/models/item_model.dart';
+import 'package:yearly_flow/src/resources/inspiration_service.dart';
+import 'package:yearly_flow/src/models/month_section.dart';
 
 abstract class IRepository {
-  Future<ItemModel> fetchAllInspirations();
+  Future<List<InspirationModel>> fetchAllInspirations();
 
   delete(InspirationModel inspiration);
 }
 
 class Repository implements IRepository {
-  Repository(this._dataController);
+  Repository(this._inspirationService);
 
-  IDataController _dataController;
+  IInspirationService _inspirationService;
 
-  Future<ItemModel> fetchAllInspirations() async => _dataController
-      .fetchAllInspirations();
+  Future<List<InspirationModel>> fetchAllInspirations() async => _inspirationService
+      .getAll();
 
   void delete(InspirationModel inspiration){
-    DataController.instance.delete(inspiration);
+    _inspirationService.delete(inspiration);
   }
 }
