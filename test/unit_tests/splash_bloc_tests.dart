@@ -8,10 +8,10 @@ import 'mock_classes.dart';
 void splashBlocTests() {
   group("splahBloc", () {
     late SplashBloc sut;
-    late MockDataController mockDataController;
+    late MockInspirationService mockDataController;
 
     setUp(() {
-      mockDataController = MockDataController();
+      mockDataController = MockInspirationService();
 
       sut = SplashBloc(mockDataController);
     });

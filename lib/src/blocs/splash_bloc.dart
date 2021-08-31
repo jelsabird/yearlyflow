@@ -1,4 +1,4 @@
-import 'package:yearly_flow/src/resources/data_controller.dart';
+import 'package:yearly_flow/src/resources/inspiration_service.dart';
 
 abstract class ISplashBloc {
   Future<void> init();
@@ -7,7 +7,7 @@ abstract class ISplashBloc {
 class SplashBloc implements ISplashBloc {
   SplashBloc(this._dataController);
 
-  IDataController _dataController;
+  IInspirationService _dataController;
 
   Future<void> init() async {
     return await _dataController.initDatabase();

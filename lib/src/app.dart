@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/src/ui/core/styles.dart';
-import 'package:yearly_flow/src/ui/inspiration_list.dart';
+import 'package:yearly_flow/src/ui/list.dart';
 
 class App extends StatelessWidget {
   @override
