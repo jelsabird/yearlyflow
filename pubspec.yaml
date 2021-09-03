@@ -39,6 +39,9 @@ dependencies:
   rxdart: ^0.27.1
   get_it: ^7.2.0
   mockito: ^5.0.15
+  bloc: ^7.1.0
+  flutter_bloc: ^7.2.0
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:

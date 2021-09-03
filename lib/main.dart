@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yearly_flow/service_locator.dart';
-import 'package:yearly_flow/src/ui/splash.dart';
-import 'package:yearly_flow/src/ui/core/styles.dart';
+import 'package:yearly_flow/src/app.dart';
+import 'package:yearly_flow/src/blocs/blocs.dart';
+import 'package:yearly_flow/src/resources/repository.dart';
 
 void main() {
   setupLocator();
-  runApp(const App());
+  Bloc.observer = SimpleBlocObserver();
+  runApp(
+    BlocProvider(
+      create: (context) {
+        return InspirationsBloc(
+          repository: locator<IRepository>(),
+        )..add(InspirationsLoaded());
+      },
+      child: YearlyFlowApp(),
+    ),
+  );
 }
-
-class App extends StatelessWidget {
-
-  const App():super(key: const Key('app_key'));
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Yearly flow',
-      theme: ThemeDataConfig.configure(),
-      home: const Splash(),
-    );
-  }
-}
-
