@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 
 import 'package:flutter/foundation.dart';
-import 'package:yearly_flow/src/ui/core/strings.dart';
+import 'package:yearly_flow/src/core/strings.dart';
 
 part 'month.g.dart';
 
