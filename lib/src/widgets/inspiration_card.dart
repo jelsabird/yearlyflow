@@ -13,7 +13,6 @@ class InspirationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
       child: InkWell(
         onTap: onTap,
         child: CardContent(

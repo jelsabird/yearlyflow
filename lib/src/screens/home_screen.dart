@@ -26,7 +26,6 @@ class HomeScreen extends StatelessWidget {
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => AddEditScreen(
-                    isEditing: false,
                     onSave: (inspiration) {
                       BlocProvider.of<InspirationsBloc>(context)
                           .add(InspirationAdded(inspiration));

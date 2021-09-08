@@ -24,7 +24,7 @@ class RecipeModelAdapter extends TypeAdapter<RecipeModel> {
       introduction: fields[5] as String,
       ingredients: (fields[6] as List).cast<String>(),
       instructions: fields[7] as String,
-    )..inspirationType = fields[1] as InspirationType;
+    );
   }
 
   @override

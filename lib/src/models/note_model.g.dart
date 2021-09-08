@@ -22,7 +22,7 @@ class NoteModelAdapter extends TypeAdapter<NoteModel> {
       timeOfMonth: fields[3] as TimeOfMonth,
       title: fields[4] as String,
       text: fields[5] as String,
-    )..inspirationType = fields[1] as InspirationType;
+    );
   }
 
   @override

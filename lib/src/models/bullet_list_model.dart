@@ -19,24 +19,24 @@ class BulletListModel implements InspirationModel {
 
   @HiveField(0)
   @override
-  String key;
+  final String key;
 
   @HiveField(1)
   @override
-  InspirationType inspirationType = InspirationType.BulletList;
+  InspirationType get inspirationType => InspirationType.BulletList;
 
   @HiveField(2)
   @override
-  Month month;
+  final Month month;
 
   @HiveField(3)
   @override
-  TimeOfMonth timeOfMonth;
+  final TimeOfMonth timeOfMonth;
 
   @HiveField(4)
   @override
-  String title = '';
+  String title;
 
   @HiveField(5)
-  List<String> bulletPoints = <String>[];
+  List<String> bulletPoints;
 }

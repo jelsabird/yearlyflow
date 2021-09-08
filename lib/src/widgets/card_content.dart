@@ -30,6 +30,7 @@ class _CardContentState extends State<CardContent> {
 
   Widget _buildContent() {
     return Flexible(
+      fit: FlexFit.loose,
       child: _getContent(),
     );
   }
@@ -39,11 +40,6 @@ class _CardContentState extends State<CardContent> {
       case InspirationType.Note:
         return NoteCardContent(
           note: widget.inspiration as NoteModel,
-          isEditing: widget.isEditing,
-        );
-      case InspirationType.Birthday:
-        return BirthdayCardContent(
-          birthday: widget.inspiration as BirthdayModel,
           isEditing: widget.isEditing,
         );
       case InspirationType.BulletList:
@@ -56,31 +52,25 @@ class _CardContentState extends State<CardContent> {
           recipe: widget.inspiration as RecipeModel,
           isEditing: widget.isEditing,
         );
+      case InspirationType.Birthday:
+        return BirthdayCardContent(
+          birthday: widget.inspiration as BirthdayModel,
+          isEditing: widget.isEditing,
+        );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (this.widget.isEditing) {
-      return Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildContent(),
-          ],
-        ),
-      );
-    } else {
-      return Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            _buildTitle(),
-            _buildContent(),
-          ],
-        ),
-      );
-    }
+    return Padding(
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (!this.widget.isEditing) _buildTitle(),
+          _buildContent(),
+        ],
+      ),
+    );
   }
 }

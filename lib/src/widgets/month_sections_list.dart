@@ -22,7 +22,7 @@ class MonthSectionsList extends StatelessWidget {
       if (state is InspirationsLoadInProgress) {
         return Center(child: CircularProgressIndicator());
       } else if (state is InspirationsLoadSuccess) {
-        final monthSections = state.year.months;
+        final monthSections = state.year.getMonths();
         return ListView.builder(
           controller: autoScrollController,
           itemCount: monthSections.length,

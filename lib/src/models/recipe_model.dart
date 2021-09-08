@@ -21,30 +21,30 @@ class RecipeModel implements InspirationModel {
 
   @HiveField(0)
   @override
-  String key;
+  final String key;
 
   @HiveField(1)
   @override
-  InspirationType inspirationType = InspirationType.Recipe;
+  InspirationType get inspirationType => InspirationType.Recipe;
 
   @HiveField(2)
   @override
-  Month month;
+  final Month month;
 
   @HiveField(3)
   @override
-  TimeOfMonth timeOfMonth;
+  final TimeOfMonth timeOfMonth;
 
   @HiveField(4)
   @override
-  String title = '';
+  String title;
   
   @HiveField(5)
-  String introduction = '';
+  String introduction;
 
   @HiveField(6)
-  List<String> ingredients = <String>[];
+  List<String> ingredients;
   
   @HiveField(7)
-  String instructions = '';
+  String instructions;
 }

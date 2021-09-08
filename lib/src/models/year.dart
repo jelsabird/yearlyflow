@@ -3,29 +3,32 @@ import 'package:yearly_flow/src/models/models.dart';
 
 class Year extends Equatable {
 
-  final List<MonthSection> months;
+  final List<InspirationModel> inspirations;
 
-  Year(this.months);
+  Year(this.inspirations);
 
   @override
-  List<Object?> get props => [months];
+  List<Object?> get props => [inspirations];
 
   InspirationModel getInspiration(String key) {
-    for (var month in months) {
-      var match = month.inspirations.where((inspiration) => inspiration
-          .key == key);
-      if (match.isNotEmpty) {
-        return match.first;
-      }
+    return inspirations.firstWhere((inspiration) => inspiration
+        .key == key);
+  }
+
+  List<MonthSection> getMonths() {
+    var monthSectionList = <MonthSection>[];
+    for (Month month in Month.values) {
+      var monthSection = MonthSection(month);
+      monthSection.inspirations
+          .addAll(inspirations.where((model) => model.month == month));
+      monthSectionList.add(monthSection);
     }
-    throw Exception("No inspiration found with key: $key");
+    return monthSectionList;
   }
 
   addInspiration(InspirationModel inspiration) {
-    var addToMonth = months.firstWhere((month) => month.month == inspiration
-        .month);
-    addToMonth.inspirations.add(inspiration);
-    _sortByTimeOfMonth(addToMonth.inspirations);
+    inspirations.add(inspiration);
+    _sortByTimeOfMonth();
   }
 
   updateInspiration(InspirationModel inspiration) {
@@ -34,14 +37,11 @@ class Year extends Equatable {
   }
 
   removeInspiration(String key) {
-    var inspirationToRemove = getInspiration(key);
-    var removeFromMonth = months.firstWhere((month) => month.month == inspirationToRemove
-        .month);
-    removeFromMonth.inspirations.remove(inspirationToRemove);
+    inspirations.removeWhere((inspiration) => inspiration.key == key);
   }
 
-  _sortByTimeOfMonth(List<InspirationModel> list) {
-    list.sort((InspirationModel a, InspirationModel b) =>
+  _sortByTimeOfMonth() {
+    inspirations.sort((InspirationModel a, InspirationModel b) =>
         a.timeOfMonth.index.compareTo(b.timeOfMonth.index));
   }
 }
