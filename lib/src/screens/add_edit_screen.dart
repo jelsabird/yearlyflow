@@ -7,6 +7,7 @@ import 'package:yearly_flow/src/core/core.dart';
 import 'package:yearly_flow/src/widgets/inspiration_card.dart';
 import 'package:yearly_flow/src/widgets/month_dropdown_button.dart';
 import 'package:yearly_flow/src/widgets/time_of_month_dropdown_button.dart';
+import 'package:yearly_flow/src/widgets/type_selector.dart';
 
 typedef OnSaveCallback = Function(InspirationModel inspiration);
 
@@ -25,7 +26,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
   late InspirationModel _inspiration;
 
   bool get _isEditing => widget.inspiration != null;
-  InspirationType _defaultType = InspirationType.Note;
+  final InspirationType _defaultType = InspirationType.Note;
   late Month _month;
   late TimeOfMonth _timeOfMonth;
   Uuid _uuid = Uuid();
@@ -89,32 +90,15 @@ class _AddEditScreenState extends State<AddEditScreen> {
               children: [
                 _isEditing
                     ? Container()
-                    : ButtonBar(
-                        children: <Widget>[
-                          TextButton(
-                            onPressed: () => _changeTo(InspirationType.Note),
-                            child: Text(InspirationType.Note.displayTitle),
-                            style: _selectedStyle(InspirationType.Note),
-                          ),
-                          TextButton(
-                            onPressed: () =>
-                                _changeTo(InspirationType.BulletList),
-                            child:
-                                Text(InspirationType.BulletList.displayTitle),
-                            style: _selectedStyle(InspirationType.BulletList),
-                          ),
-                          TextButton(
-                            onPressed: () => _changeTo(InspirationType.Recipe),
-                            child: Text(InspirationType.Recipe.displayTitle),
-                            style: _selectedStyle(InspirationType.Recipe),
-                          ),
-                          TextButton(
-                            onPressed: () =>
-                                _changeTo(InspirationType.Birthday),
-                            child: Text(InspirationType.Birthday.displayTitle),
-                            style: _selectedStyle(InspirationType.Birthday),
-                          ),
-                        ],
+                    : TypeSelector(
+                        onSelect: (inspiration) {
+                          setState(() {
+                            _inspiration = inspiration;
+                          });
+                        },
+                        initialValue: _isEditing
+                            ? _inspiration.inspirationType
+                            : _defaultType,
                       ),
                 InspirationCard(inspiration: _inspiration, isEditing: true),
                 Row(
