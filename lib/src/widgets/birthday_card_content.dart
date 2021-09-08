@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yearly_flow/src/core/core.dart';
 import 'package:yearly_flow/src/models/birthday_model.dart';
+import 'package:yearly_flow/src/models/enums/month.dart';
+import 'package:yearly_flow/src/models/enums/time_of_month.dart';
 import 'package:yearly_flow/src/widgets/date_text_field.dart';
 
 class BirthdayCardContent extends StatefulWidget {
@@ -8,10 +10,12 @@ class BirthdayCardContent extends StatefulWidget {
     Key? key,
     required this.birthday,
     this.isEditing = false,
+    this.onDatePicked,
   }) : super(key: key);
 
   final BirthdayModel birthday;
   final bool isEditing;
+  final Function? onDatePicked;
 
   BirthdayModel birthdayModel() => birthday;
 
@@ -63,9 +67,13 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
                 setState(
                   () {
                     widget.birthday.date = pickedDate;
+                    widget.birthday.month = Month.values[pickedDate.month - 1];
+                    widget.birthday.timeOfMonth =
+                        TimeOfMonthExtension.fromDate(pickedDate);
                   },
                 );
               },
+              onDatePicked: widget.onDatePicked,
             ),
           )
         ],

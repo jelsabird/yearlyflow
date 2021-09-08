@@ -78,6 +78,7 @@ class MonthSectionsList extends StatelessWidget {
                           tag: "${inspiration.key}__heroTag",
                           child: InspirationCard(
                             inspiration: inspirations[index],
+                            onDatePicked: () => {},
                             onTap: () => Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) => DetailScreen(

@@ -4,10 +4,7 @@ import 'package:uuid/uuid.dart';
 import 'package:yearly_flow/src/blocs/blocs.dart';
 import 'package:yearly_flow/src/models/models.dart';
 import 'package:yearly_flow/src/core/core.dart';
-import 'package:yearly_flow/src/widgets/inspiration_card.dart';
-import 'package:yearly_flow/src/widgets/month_dropdown_button.dart';
-import 'package:yearly_flow/src/widgets/time_of_month_dropdown_button.dart';
-import 'package:yearly_flow/src/widgets/type_selector.dart';
+import 'package:yearly_flow/src/widgets/widgets.dart';
 
 typedef OnSaveCallback = Function(InspirationModel inspiration);
 
@@ -27,50 +24,15 @@ class _AddEditScreenState extends State<AddEditScreen> {
 
   bool get _isEditing => widget.inspiration != null;
   final InspirationType _defaultType = InspirationType.Note;
-  late Month _month;
-  late TimeOfMonth _timeOfMonth;
   Uuid _uuid = Uuid();
 
   @override
   void initState() {
     super.initState();
 
-    if (_isEditing) {
-      _inspiration = InspirationModel.copyWith(widget.inspiration!);
-      _month = _inspiration.month;
-      _timeOfMonth = _inspiration.timeOfMonth;
-    } else {
-      _changeTo(_defaultType);
-      _month = Month.January;
-      _timeOfMonth = TimeOfMonth.Any;
-    }
-  }
-
-  void _changeTo(InspirationType selectedType) {
-    setState(() {
-      switch (selectedType) {
-        case InspirationType.Note:
-          _inspiration = NoteModel(key: _uuid.v4());
-          break;
-        case InspirationType.BulletList:
-          _inspiration = BulletListModel(key: _uuid.v4());
-          break;
-        case InspirationType.Recipe:
-          _inspiration = RecipeModel(key: _uuid.v4());
-          break;
-        case InspirationType.Birthday:
-          _inspiration = BirthdayModel(key: _uuid.v4());
-          break;
-      }
-    });
-  }
-
-  ButtonStyle _selectedStyle(InspirationType selectedType) {
-    if (_inspiration.inspirationType == selectedType) {
-      return TextButton.styleFrom(primary: AppColorScheme.accent);
-    } else {
-      return TextButton.styleFrom(primary: AppColorScheme.primary);
-    }
+    _inspiration = _isEditing
+        ? InspirationModel.copyWith(widget.inspiration!)
+        : NoteModel(key: _uuid.v4());
   }
 
   @override
@@ -100,35 +62,19 @@ class _AddEditScreenState extends State<AddEditScreen> {
                             ? _inspiration.inspirationType
                             : _defaultType,
                       ),
-                InspirationCard(inspiration: _inspiration, isEditing: true),
-                Row(
-                  children: [
-                    Text(
-                      Strings.editMonthAndTime,
-                      style: TextStyle(
-                          color: AppColorScheme.backgroundDarkForeground),
-                    ),
-                    TimeOfMonthDropdownButton(
-                        value: _timeOfMonth,
-                        onChanged: (TimeOfMonth? newValue) => setState(() {
-                              _timeOfMonth = newValue!;
-                            })),
-                    MonthDropdownButton(
-                        value: _month,
-                        onChanged: (Month? newValue) => setState(() {
-                              _month = newValue!;
-                            })),
-                  ],
-                ),
+                InspirationCard(inspiration: _inspiration, isEditing: true,
+                  onDatePicked: () => setState(() {}),),
+                MonthSelector(
+                    inspiration: _inspiration,
+                    isEditable: _inspiration.inspirationType !=
+                        InspirationType.Birthday),
               ],
             ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            widget.onSave(InspirationModel.copyWith(_inspiration,
-                editedMonth: _month, editedTimeOfMonth: _timeOfMonth));
-            Navigator.pop(context);
+            widget.onSave(InspirationModel.copyWith(_inspiration));
           },
           child: const Icon(Icons.check),
         ),

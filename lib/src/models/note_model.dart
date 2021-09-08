@@ -27,11 +27,11 @@ class NoteModel implements InspirationModel {
 
   @HiveField(2)
   @override
-  final Month month;
+  Month month;
 
   @HiveField(3)
   @override
-  final TimeOfMonth timeOfMonth;
+  TimeOfMonth timeOfMonth;
 
   @HiveField(4)
   @override

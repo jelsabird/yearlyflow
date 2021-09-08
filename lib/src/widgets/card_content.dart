@@ -8,10 +8,12 @@ import 'bullet_list_card_content.dart';
 import '../widgets/note_card_content.dart';
 
 class CardContent extends StatefulWidget {
-  CardContent({required this.inspiration, this.isEditing = false});
+  CardContent({required this.inspiration, this.isEditing = false,
+  this.onDatePicked});
 
   final InspirationModel inspiration;
   final bool isEditing;
+  final Function? onDatePicked;
 
   @override
   _CardContentState createState() => _CardContentState();
@@ -30,6 +32,7 @@ class _CardContentState extends State<CardContent> {
 
   Widget _buildContent() {
     return Flexible(
+      flex: 1,
       fit: FlexFit.loose,
       child: _getContent(),
     );
@@ -56,6 +59,7 @@ class _CardContentState extends State<CardContent> {
         return BirthdayCardContent(
           birthday: widget.inspiration as BirthdayModel,
           isEditing: widget.isEditing,
+          onDatePicked: widget.onDatePicked,
         );
     }
   }

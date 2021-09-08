@@ -26,7 +26,8 @@ class DetailScreen extends StatelessWidget {
               padding: EdgeInsets.all(16.0),
               child: Hero(
                 tag: "${id}__heroTag",
-                child: InspirationCard(inspiration: inspiration),
+                child: InspirationCard(inspiration: inspiration,
+        onDatePicked: () => {},),
               ),
             ),
           ),
