@@ -35,10 +35,12 @@ class InspirationsBloc extends Bloc<InspirationsEvent, InspirationsState> {
   Stream<InspirationsState> _mapInspirationAddedToState(
       InspirationAdded event) async* {
     if (state is InspirationsLoadSuccess) {
-      final Year updatedInspirations = (state as InspirationsLoadSuccess).year;
-      updatedInspirations.addInspiration(event.inspiration);
+      final List<InspirationModel> updatedInspirations = List.from((state as
+      InspirationsLoadSuccess).year.inspirations);
+      Year year = Year(updatedInspirations);
+      year.addInspiration(event.inspiration);
 
-      yield InspirationsLoadSuccess(updatedInspirations);
+      yield InspirationsLoadSuccess(year);
 
       _saveInspiration(event.inspiration);
     }
@@ -47,10 +49,12 @@ class InspirationsBloc extends Bloc<InspirationsEvent, InspirationsState> {
   Stream<InspirationsState> _mapInspirationUpdatedToState(
       InspirationUpdated event) async* {
     if (state is InspirationsLoadSuccess) {
-      final Year updatedInspirations = (state as InspirationsLoadSuccess).year;
-      updatedInspirations.updateInspiration(event.inspiration);
+      final List<InspirationModel> updatedInspirations = List.from((state as
+      InspirationsLoadSuccess).year.inspirations);
+      Year year = Year(updatedInspirations);
+      year.updateInspiration(event.inspiration);
 
-      yield InspirationsLoadSuccess(updatedInspirations);
+      yield InspirationsLoadSuccess(year);
 
       _saveInspiration(event.inspiration);
     }
@@ -59,10 +63,12 @@ class InspirationsBloc extends Bloc<InspirationsEvent, InspirationsState> {
   Stream<InspirationsState> _mapInspirationDeletedToState(
       InspirationDeleted event) async* {
     if (state is InspirationsLoadSuccess) {
-      final Year updatedInspirations = (state as InspirationsLoadSuccess).year;
-      updatedInspirations.removeInspiration(event.inspiration.key);
+      final List<InspirationModel> updatedInspirations = List.from((state as
+      InspirationsLoadSuccess).year.inspirations);
+      Year year = Year(updatedInspirations);
+      year.removeInspiration(event.inspiration.key);
 
-      yield InspirationsLoadSuccess(updatedInspirations);
+      yield InspirationsLoadSuccess(year);
 
       _deleteInspiration(event.inspiration);
     }

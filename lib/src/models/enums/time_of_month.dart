@@ -44,4 +44,11 @@ extension TimeOfMonthExtension on TimeOfMonth {
       default: return TimeOfMonth.Any;
     }
   }
+
+  static TimeOfMonth fromDate(DateTime? date) {
+    if (date == null) return TimeOfMonth.Any;
+    if (date.day < 10) return TimeOfMonth.Start;
+    if (date.day < 20) return TimeOfMonth.Middle;
+    return TimeOfMonth.End;
+  }
 }

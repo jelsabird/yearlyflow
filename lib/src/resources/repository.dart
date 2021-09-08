@@ -21,24 +21,7 @@ class Repository implements IRepository {
     var inspirations = await _inspirationService
         .getAll();
 
-    return Year(_mapToMonthSections(_sortByTimeOfMonth(inspirations)));
-  }
-
-  List<InspirationModel> _sortByTimeOfMonth(List<InspirationModel> list) {
-    list.sort((InspirationModel a, InspirationModel b) =>
-        a.timeOfMonth.index.compareTo(b.timeOfMonth.index));
-    return list;
-  }
-
-  List<MonthSection> _mapToMonthSections(List<InspirationModel> inspirations) {
-    var monthSectionList = <MonthSection>[];
-    for (Month month in Month.values) {
-      var monthSection = MonthSection(month);
-      monthSection.inspirations
-          .addAll(inspirations.where((model) => model.month == month));
-      monthSectionList.add(monthSection);
-    }
-    return monthSectionList;
+    return Year(inspirations);
   }
 
   @override

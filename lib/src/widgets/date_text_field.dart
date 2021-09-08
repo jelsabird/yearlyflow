@@ -50,7 +50,7 @@ class _DateTextFieldState extends State<DateTextField> {
         onTap: () async {
           final DateTime? date = await showDatePicker(
               context: context,
-              initialDate: widget.initialDate!,
+              initialDate: DateTime.now(),
               firstDate: DateTime(1900),
               lastDate: DateTime.now());
           if (date != null) {

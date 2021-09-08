@@ -34,7 +34,6 @@ class DetailScreen extends StatelessWidget {
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => AddEditScreen(
-                  isEditing: true,
                   inspiration: inspiration,
                   onSave: (inspiration) {
                     BlocProvider.of<InspirationsBloc>(context)

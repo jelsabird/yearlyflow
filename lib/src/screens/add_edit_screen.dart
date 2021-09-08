@@ -11,15 +11,10 @@ import 'package:yearly_flow/src/widgets/time_of_month_dropdown_button.dart';
 typedef OnSaveCallback = Function(InspirationModel inspiration);
 
 class AddEditScreen extends StatefulWidget {
-  final bool isEditing;
   final OnSaveCallback onSave;
   final InspirationModel? inspiration;
 
-  AddEditScreen(
-      {Key? key,
-      required this.isEditing,
-      required this.onSave,
-      this.inspiration})
+  AddEditScreen({Key? key, required this.onSave, this.inspiration})
       : super(key: key);
 
   @override
@@ -27,29 +22,50 @@ class AddEditScreen extends StatefulWidget {
 }
 
 class _AddEditScreenState extends State<AddEditScreen> {
-  bool get isEditing => widget.isEditing;
+  late InspirationModel _inspiration;
+
+  bool get _isEditing => widget.inspiration != null;
+  InspirationType _defaultType = InspirationType.Note;
+  late Month _month;
+  late TimeOfMonth _timeOfMonth;
   Uuid _uuid = Uuid();
 
-  void _changeTo(InspirationModel inspiration, InspirationType selectedType) {
-    switch (selectedType) {
-      case InspirationType.Note:
-        inspiration = NoteModel(key: _uuid.v4());
-        break;
-      case InspirationType.BulletList:
-        inspiration = BulletListModel(key: _uuid.v4());
-        break;
-      case InspirationType.Recipe:
-        inspiration = RecipeModel(key: _uuid.v4());
-        break;
-      case InspirationType.Birthday:
-        inspiration = BirthdayModel(key: _uuid.v4());
-        break;
+  @override
+  void initState() {
+    super.initState();
+
+    if (_isEditing) {
+      _inspiration = InspirationModel.copyWith(widget.inspiration!);
+      _month = _inspiration.month;
+      _timeOfMonth = _inspiration.timeOfMonth;
+    } else {
+      _changeTo(_defaultType);
+      _month = Month.January;
+      _timeOfMonth = TimeOfMonth.Any;
     }
   }
 
-  ButtonStyle _selectedStyle(
-      InspirationModel inspiration, InspirationType selectedType) {
-    if (inspiration.inspirationType == selectedType) {
+  void _changeTo(InspirationType selectedType) {
+    setState(() {
+      switch (selectedType) {
+        case InspirationType.Note:
+          _inspiration = NoteModel(key: _uuid.v4());
+          break;
+        case InspirationType.BulletList:
+          _inspiration = BulletListModel(key: _uuid.v4());
+          break;
+        case InspirationType.Recipe:
+          _inspiration = RecipeModel(key: _uuid.v4());
+          break;
+        case InspirationType.Birthday:
+          _inspiration = BirthdayModel(key: _uuid.v4());
+          break;
+      }
+    });
+  }
+
+  ButtonStyle _selectedStyle(InspirationType selectedType) {
+    if (_inspiration.inspirationType == selectedType) {
       return TextButton.styleFrom(primary: AppColorScheme.accent);
     } else {
       return TextButton.styleFrom(primary: AppColorScheme.primary);
@@ -60,7 +76,6 @@ class _AddEditScreenState extends State<AddEditScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<InspirationsBloc, InspirationsState>(
         builder: (context, state) {
-      final inspiration = widget.inspiration ?? NoteModel(key: _uuid.v4());
       return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -72,42 +87,36 @@ class _AddEditScreenState extends State<AddEditScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                isEditing
+                _isEditing
                     ? Container()
                     : ButtonBar(
                         children: <Widget>[
                           TextButton(
-                            onPressed: () =>
-                                _changeTo(inspiration, InspirationType.Note),
+                            onPressed: () => _changeTo(InspirationType.Note),
                             child: Text(InspirationType.Note.displayTitle),
-                            style: _selectedStyle(
-                                inspiration, InspirationType.Note),
+                            style: _selectedStyle(InspirationType.Note),
                           ),
                           TextButton(
-                            onPressed: () => _changeTo(
-                                inspiration, InspirationType.BulletList),
+                            onPressed: () =>
+                                _changeTo(InspirationType.BulletList),
                             child:
                                 Text(InspirationType.BulletList.displayTitle),
-                            style: _selectedStyle(
-                                inspiration, InspirationType.BulletList),
+                            style: _selectedStyle(InspirationType.BulletList),
+                          ),
+                          TextButton(
+                            onPressed: () => _changeTo(InspirationType.Recipe),
+                            child: Text(InspirationType.Recipe.displayTitle),
+                            style: _selectedStyle(InspirationType.Recipe),
                           ),
                           TextButton(
                             onPressed: () =>
-                                _changeTo(inspiration, InspirationType.Recipe),
-                            child: Text(InspirationType.Recipe.displayTitle),
-                            style: _selectedStyle(
-                                inspiration, InspirationType.Recipe),
-                          ),
-                          TextButton(
-                            onPressed: () => _changeTo(
-                                inspiration, InspirationType.Birthday),
+                                _changeTo(InspirationType.Birthday),
                             child: Text(InspirationType.Birthday.displayTitle),
-                            style: _selectedStyle(
-                                inspiration, InspirationType.Birthday),
+                            style: _selectedStyle(InspirationType.Birthday),
                           ),
                         ],
                       ),
-                InspirationCard(inspiration: inspiration, isEditing: true),
+                InspirationCard(inspiration: _inspiration, isEditing: true),
                 Row(
                   children: [
                     Text(
@@ -116,13 +125,15 @@ class _AddEditScreenState extends State<AddEditScreen> {
                           color: AppColorScheme.backgroundDarkForeground),
                     ),
                     TimeOfMonthDropdownButton(
-                        value: inspiration.timeOfMonth,
-                        onChanged: (TimeOfMonth? newValue) =>
-                            inspiration.timeOfMonth = newValue!),
+                        value: _timeOfMonth,
+                        onChanged: (TimeOfMonth? newValue) => setState(() {
+                              _timeOfMonth = newValue!;
+                            })),
                     MonthDropdownButton(
-                        value: inspiration.month,
-                        onChanged: (Month? newValue) =>
-                            inspiration.month = newValue!),
+                        value: _month,
+                        onChanged: (Month? newValue) => setState(() {
+                              _month = newValue!;
+                            })),
                   ],
                 ),
               ],
@@ -131,7 +142,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            widget.onSave(inspiration);
+            widget.onSave(InspirationModel.copyWith(_inspiration,
+                editedMonth: _month, editedTimeOfMonth: _timeOfMonth));
             Navigator.pop(context);
           },
           child: const Icon(Icons.check),

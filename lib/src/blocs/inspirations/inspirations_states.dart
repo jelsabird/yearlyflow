@@ -19,8 +19,8 @@ class InspirationsLoadSuccess extends InspirationsState {
   List<Object> get props => [year];
 
   @override
-  String toString() => 'InspirationsLoadSuccess { year: $year'
-      ' }';
+  String toString() =>
+      'InspirationsLoadSuccess { count: ${year.inspirations.length} }';
 }
 
 class InspirationsLoadFailure extends InspirationsState {}

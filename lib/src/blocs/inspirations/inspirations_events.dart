@@ -19,7 +19,8 @@ class InspirationAdded extends InspirationsEvent {
   List<Object> get props => [inspiration];
 
   @override
-  String toString() => 'InspirationAdded { inspiration: $inspiration }';
+  String toString() => 'Inspiration added { inspiration: ${inspiration.title},'
+      ' ${inspiration.inspirationType} }';
 }
 
 class InspirationUpdated extends InspirationsEvent {
@@ -31,7 +32,8 @@ class InspirationUpdated extends InspirationsEvent {
   List<Object> get props => [inspiration];
 
   @override
-  String toString() => 'InspirationUpdated { inspiration: $inspiration }';
+  String toString() => 'Inspiration updated { inspiration: ${inspiration
+      .title}, ${inspiration.inspirationType} }';
 }
 
 class InspirationDeleted extends InspirationsEvent {
@@ -43,5 +45,6 @@ class InspirationDeleted extends InspirationsEvent {
   List<Object> get props => [inspiration];
 
   @override
-  String toString() => 'InspirationDeleted { inspiration: $inspiration }';
+  String toString() => 'Inspiration deleted { inspiration: ${inspiration
+      .title}, ${inspiration.inspirationType} }';
 }

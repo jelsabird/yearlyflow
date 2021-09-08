@@ -22,7 +22,7 @@ class BirthdayModelAdapter extends TypeAdapter<BirthdayModel> {
       timeOfMonth: fields[3] as TimeOfMonth,
       name: fields[4] as String,
       date: fields[5] as DateTime?,
-    )..inspirationType = fields[1] as InspirationType;
+    );
   }
 
   @override

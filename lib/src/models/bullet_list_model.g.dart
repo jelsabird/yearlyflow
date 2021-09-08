@@ -22,7 +22,7 @@ class BulletListModelAdapter extends TypeAdapter<BulletListModel> {
       timeOfMonth: fields[3] as TimeOfMonth,
       title: fields[4] as String,
       bulletPoints: (fields[5] as List).cast<String>(),
-    )..inspirationType = fields[1] as InspirationType;
+    );
   }
 
   @override

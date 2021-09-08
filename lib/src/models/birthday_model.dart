@@ -19,19 +19,19 @@ class BirthdayModel implements InspirationModel {
 
   @HiveField(0)
   @override
-  String key;
+  final String key;
 
   @HiveField(1)
   @override
-  InspirationType inspirationType = InspirationType.Birthday;
+  InspirationType get inspirationType => InspirationType.Birthday;
 
   @HiveField(2)
   @override
-  Month month;
+  final Month month;
 
   @HiveField(3)
   @override
-  TimeOfMonth timeOfMonth;
+  final TimeOfMonth timeOfMonth;
 
   @override
   String get title {
@@ -42,8 +42,8 @@ class BirthdayModel implements InspirationModel {
   }
 
   @HiveField(4)
-  String name = '';
+  String name;
 
   @HiveField(5)
-  DateTime? date = DateTime.now();
+  DateTime? date;
 }
