@@ -8,7 +8,7 @@ class YearlyFlowApp extends StatelessWidget {
     return MaterialApp(
       title: Strings.app_title,
       theme: ThemeDataConfig.configure(),
-      home: HomeScreen()
+      home: HomeScreen(key: YearlyFlowKeys.homeScreen)
     );
   }
 }

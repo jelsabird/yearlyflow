@@ -53,6 +53,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 _isEditing
                     ? Container()
                     : TypeSelector(
+                  key: YearlyFlowKeys.typeSelector,
                         onSelect: (inspiration) {
                           setState(() {
                             _inspiration = inspiration;
@@ -65,6 +66,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 InspirationCard(inspiration: _inspiration, isEditing: true,
                   onDatePicked: () => setState(() {}),),
                 MonthSelector(
+                  key: YearlyFlowKeys.monthSelector,
                     inspiration: _inspiration,
                     isEditable: _inspiration.inspirationType !=
                         InspirationType.Birthday),
@@ -73,6 +75,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          key: YearlyFlowKeys.saveButton,
           onPressed: () {
             widget.onSave(InspirationModel.copyWith(_inspiration));
           },

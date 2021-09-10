@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yearly_flow/src/core/core.dart';
 import 'package:yearly_flow/src/models/models.dart';
 import 'package:yearly_flow/src/core/styles.dart';
 
@@ -32,31 +33,34 @@ class _CardContentState extends State<CardContent> {
 
   Widget _buildContent() {
     return Flexible(
-      flex: 1,
       fit: FlexFit.loose,
-      child: _getContent(),
+      child: _content(),
     );
   }
 
-  Widget _getContent() {
+  Widget _content() {
     switch (widget.inspiration.inspirationType) {
       case InspirationType.Note:
         return NoteCardContent(
+          key: YearlyFlowKeys.noteCardContent,
           note: widget.inspiration as NoteModel,
           isEditing: widget.isEditing,
         );
       case InspirationType.BulletList:
         return BulletListCardContent(
+          key: YearlyFlowKeys.bulletListCardContent,
           bulletList: widget.inspiration as BulletListModel,
           isEditing: widget.isEditing,
         );
       case InspirationType.Recipe:
         return RecipeCardContent(
+          key: YearlyFlowKeys.recipeCardContent,
           recipe: widget.inspiration as RecipeModel,
           isEditing: widget.isEditing,
         );
       case InspirationType.Birthday:
         return BirthdayCardContent(
+          key: YearlyFlowKeys.birthdayCardContent,
           birthday: widget.inspiration as BirthdayModel,
           isEditing: widget.isEditing,
           onDatePicked: widget.onDatePicked,

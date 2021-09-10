@@ -22,7 +22,9 @@ class BulletListHelper {
     var list = lineSplitter.convert(text.trim());
     StringBuffer buffer = StringBuffer();
     for (String line in list) {
-      buffer.write("• ");
+      if (!line.startsWith("• ")) {
+        buffer.write("• ");
+      }
       buffer.write(line);
       buffer.writeln();
     }
@@ -33,7 +35,9 @@ class BulletListHelper {
   static String formatStringFromList(List<String> list) {
     StringBuffer buffer = StringBuffer();
     for (String line in list) {
-      buffer.write("• ");
+      if (!line.startsWith("• ")) {
+        buffer.write("• ");
+      }
       buffer.write(line);
       buffer.writeln();
     }

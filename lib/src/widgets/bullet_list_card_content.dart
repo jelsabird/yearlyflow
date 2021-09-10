@@ -20,18 +20,29 @@ class BulletListCardContent extends StatefulWidget {
 class _BulletListCardContentState extends State<BulletListCardContent> {
   late TextEditingController _titleController;
   late TextEditingController _bulletListController;
+  final String _bullet = String.fromCharCode(0x2022);
+  late String _paddedBullet = _bullet + ' ';
+  int currentTextLength = 0;
+  FocusNode focusNode = FocusNode(
+    canRequestFocus: true,
+  );
 
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.bulletList.title);
-    _bulletListController = TextEditingController(
-        text:
-            BulletListHelper.convertListToText(widget.bulletList.bulletPoints));
+    _bulletListController = TextEditingController();
+    if (widget.isEditing) {
+      _bulletListController.text =
+          BulletListHelper.formatStringFromList(widget.bulletList.bulletPoints);
+    } else {
+      _bulletListController.text = _paddedBullet;
+      _titleController.text = _paddedBullet;
+    }
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _titleController.dispose();
     _bulletListController.dispose();
     super.dispose();
@@ -46,10 +57,16 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
     }
   }
 
+  void _moveCursorToEnd() {
+    _bulletListController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _bulletListController.text.length));
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.isEditing) {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: _titleController,
@@ -70,6 +87,17 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
           TextField(
             controller: _bulletListController,
             onChanged: (String editedList) {
+              if (editedList[0] != _bullet) {
+                _bulletListController.text = _paddedBullet + editedList;
+                _moveCursorToEnd();
+              }
+              if (editedList[editedList.length - 1] == '\n' &&
+                  editedList.length > currentTextLength) {
+                _bulletListController.text = editedList + _paddedBullet;
+                _moveCursorToEnd();
+              }
+              currentTextLength = _bulletListController.text.length;
+
               setState(() {
                 _updateBulletList(
                     bulletPoints:
@@ -91,9 +119,6 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
         BulletListHelper.formatStringFromList(widget.bulletList.bulletPoints),
         overflow: TextOverflow.fade,
       );
-      /*Column(
-              children: BulletListHelper.getTextRows(
-                  widget.bulletList.bulletPoints)),*/
     }
   }
 }
