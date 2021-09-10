@@ -63,6 +63,7 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
           SizedBox(
             height: 40,
             child: DateTextField(
+              key: YearlyFlowKeys.dateTextField,
               initialDate: widget.birthday.date,
               onChanged: (DateTime pickedDate) {
                 setState(
@@ -80,7 +81,7 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
         ],
       );
     } else {
-      return Text('');
+      return Text('', key: YearlyFlowKeys.emptyBirthdayContent);
     }
   }
 }

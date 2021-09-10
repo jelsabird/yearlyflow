@@ -141,6 +141,7 @@ _instructionsController = TextEditingController(text: widget.recipe
       return Text(
         BulletListHelper.formatRecipe(widget.recipe.introduction,
             widget.recipe.ingredients, widget.recipe.instructions),
+        key: YearlyFlowKeys.formattedRecipe,
         overflow: TextOverflow.fade,
         style: Styles.cardBodyStyle,
       );

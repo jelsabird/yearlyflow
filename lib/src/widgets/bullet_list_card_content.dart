@@ -117,6 +117,7 @@ class _BulletListCardContentState extends State<BulletListCardContent> {
     } else {
       return Text(
         BulletListHelper.formatStringFromList(widget.bulletList.bulletPoints),
+        key: YearlyFlowKeys.formattedBulletList,
         overflow: TextOverflow.fade,
       );
     }

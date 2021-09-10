@@ -19,4 +19,8 @@ class YearlyFlowKeys {
   static final Key birthdayCardContent = const Key('--birthdayCardContent--');
   static final Key typeSelector = const Key('--typeSelector--');
   static final Key monthSelector = const Key('--monthSelector--');
+  static final Key dateTextField = const Key('--dateTextField--');
+  static final Key emptyBirthdayContent = const Key('--emptyBirthdayContent--');
+  static final Key formattedBulletList = const Key('--formattedBulletList--');
+  static final Key formattedRecipe = const Key('--formattedRecipe--');
 }
