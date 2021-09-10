@@ -33,7 +33,9 @@ class MonthSectionsList extends StatelessWidget {
             return _wrapScrollTag(
               index: monthIndex,
               child: StickyHeader(
-                header: MonthHeader(month.displayTitle),
+                header: MonthHeader(
+                    key: YearlyFlowKeys.monthHeader,
+                    monthTitle: month.displayTitle),
                 content: Container(
                   child: GridView.builder(
                     shrinkWrap: true,
@@ -56,6 +58,7 @@ class MonthSectionsList extends StatelessWidget {
                           );
                         },
                         background: Row(
+                          key: YearlyFlowKeys.deleteButton,
                           children: [
                             Flexible(
                               flex: 1,
@@ -81,7 +84,7 @@ class MonthSectionsList extends StatelessWidget {
                             onDatePicked: () => {},
                             onTap: () => Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (_) => DetailScreen(
+                                builder: (_) => DetailsScreen(
                                   id: inspiration.key,
                                 ),
                               ),
@@ -98,6 +101,7 @@ class MonthSectionsList extends StatelessWidget {
         );
       } else {
         return Container(
+          key: YearlyFlowKeys.emptyListContainer,
           child: Text("Load failure"),
         );
       }

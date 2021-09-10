@@ -67,6 +67,7 @@ _instructionsController = TextEditingController(text: widget.recipe
   Widget build(BuildContext context) {
     if (widget.isEditing) {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: _titleController,

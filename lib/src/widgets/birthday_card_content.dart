@@ -42,6 +42,7 @@ class _BirthdayCardContentState extends State<BirthdayCardContent> {
   Widget build(BuildContext context) {
     if (widget.isEditing) {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: _nameController,

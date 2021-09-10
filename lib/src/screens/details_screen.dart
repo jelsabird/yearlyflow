@@ -5,10 +5,10 @@ import 'package:yearly_flow/src/screens/screens.dart';
 import 'package:yearly_flow/src/core/core.dart';
 import 'package:yearly_flow/src/widgets/inspiration_card.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailsScreen extends StatelessWidget {
   final String id;
 
-  DetailScreen({Key? key, required this.id}) : super(key: key);
+  DetailsScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +32,7 @@ class DetailScreen extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
+            key:  YearlyFlowKeys.editButton,
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => AddEditScreen(

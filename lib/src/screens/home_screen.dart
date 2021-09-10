@@ -7,6 +7,8 @@ import 'package:yearly_flow/src/widgets/widgets.dart';
 import 'package:yearly_flow/src/core/core.dart';
 
 class HomeScreen extends StatelessWidget {
+  HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final AutoScrollController _autoScrollController = AutoScrollController(
@@ -21,11 +23,15 @@ class HomeScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(Strings.app_title),
           ),
-          body: MonthSectionsList(autoScrollController: _autoScrollController),
+          body: MonthSectionsList(
+              key: YearlyFlowKeys.monthSectionsList,
+              autoScrollController: _autoScrollController),
           floatingActionButton: FloatingActionButton(
+            key: YearlyFlowKeys.addButton,
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => AddEditScreen(
+                    key: YearlyFlowKeys.addEditScreen,
                     onSave: (inspiration) {
                       BlocProvider.of<InspirationsBloc>(context)
                           .add(InspirationAdded(inspiration));

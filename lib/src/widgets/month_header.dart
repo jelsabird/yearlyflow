@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yearly_flow/src/core/core.dart';
 
 class MonthHeader extends StatelessWidget {
-  MonthHeader(this.monthTitle);
+  MonthHeader({required this.monthTitle, Key? key}) : super(key: key);
 
   final String monthTitle;
 

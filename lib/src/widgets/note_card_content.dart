@@ -47,6 +47,7 @@ class _NoteCardContentState extends State<NoteCardContent> {
   Widget build(BuildContext context) {
     if (widget.isEditing) {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
             controller: _titleController,
