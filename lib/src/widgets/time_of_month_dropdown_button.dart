@@ -25,7 +25,7 @@ class _TimeOfMonthDropdownButtonState extends State<TimeOfMonthDropdownButton> {
         icon: const Icon(Icons.arrow_downward),
         iconSize: 24,
         dropdownColor: AppColorScheme.backgroundDark,
-        style: const TextStyle(color: AppColorScheme.accent),
+        style: TextStyle(color: AppColorScheme.accent),
         underline: Container(
           height: 2,
           color: AppColorScheme.accent,

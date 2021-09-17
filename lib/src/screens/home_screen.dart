@@ -21,8 +21,11 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(Strings.app_title),
-          ),
+            title: Text(Strings.app_title,
+              style: TextStyle(
+                  fontFamily: 'Bohemian',
+                  fontSize: 50),
+          ),),
           body: MonthSectionsList(
               key: YearlyFlowKeys.monthSectionsList,
               autoScrollController: _autoScrollController),

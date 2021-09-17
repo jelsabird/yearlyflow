@@ -8,6 +8,7 @@ class ThemeDataConfig {
       accentColor: AppColorScheme.accent,
       backgroundColor: AppColorScheme.backgroundDark,
       scaffoldBackgroundColor: AppColorScheme.backgroundDark,
+      canvasColor: AppColorScheme.backgroundDark,
       fontFamily: "Roboto",
       textTheme: TextTheme(
         headline1: Styles.cardTitleStyle,
@@ -19,10 +20,9 @@ class ThemeDataConfig {
         margin: EdgeInsets.all(16.0),
       ),
       buttonTheme: ButtonThemeData(
-        minWidth: 60.0,
-        textTheme: ButtonTextTheme.primary,
-        focusColor: Colors.amber
-      ),
+          minWidth: 60.0,
+          textTheme: ButtonTextTheme.primary,
+          focusColor: Colors.amber),
       appBarTheme: AppBarTheme(
         foregroundColor: AppColorScheme.primaryForeground,
       ),
@@ -39,15 +39,19 @@ class ThemeDataConfig {
 }
 
 class Styles {
-  static const TextStyle cardTitleStyle =
-      TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold);
-
-  static const TextStyle cardBodyStyle = TextStyle(
+  static const TextStyle cardTitleStyle = TextStyle(
     fontSize: 14.0,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Courier New',
   );
 
-  static const TextStyle monthHeaderStyle = TextStyle(
+  static const TextStyle cardBodyStyle =
+      TextStyle(fontSize: 14.0, fontFamily: 'Courier New');
+
+  static TextStyle monthHeaderStyle = TextStyle(
     fontSize: 20.0,
-    color: AppColorScheme.accent
+    color: AppColorScheme.accentForeground,
+    fontFamily: 'Courier New',
+    fontWeight: FontWeight.bold,
   );
 }

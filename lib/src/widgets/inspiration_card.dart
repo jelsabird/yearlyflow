@@ -14,13 +14,23 @@ class InspirationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Material(
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        child: CardContent(
-          inspiration: inspiration,
-          isEditing: isEditing,
-          onDatePicked: onDatePicked,
+        child: Stack(
+          children: [
+            Image.asset('assets/torn_paper.png'),
+            Padding(
+              padding: EdgeInsets.only(left: 32, top: 16, right: 4, bottom:
+              16),
+              child: CardContent(
+                inspiration: inspiration,
+                isEditing: isEditing,
+                onDatePicked: onDatePicked,
+              ),
+            ),
+          ],
         ),
       ),
     );

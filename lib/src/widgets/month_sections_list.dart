@@ -23,78 +23,85 @@ class MonthSectionsList extends StatelessWidget {
         return Center(child: CircularProgressIndicator());
       } else if (state is InspirationsLoadSuccess) {
         final monthSections = state.year.getMonths();
+
         return ListView.builder(
           controller: autoScrollController,
           itemCount: monthSections.length,
+          padding: const EdgeInsets.only(bottom: 72.0),
           itemBuilder: (monthContext, monthIndex) {
             Month month = monthSections[monthIndex].month;
             List<InspirationModel> inspirations =
                 monthSections[monthIndex].inspirations;
             return _wrapScrollTag(
               index: monthIndex,
-              child: StickyHeader(
-                header: MonthHeader(
-                    key: YearlyFlowKeys.monthHeader,
-                    monthTitle: month.displayTitle),
-                content: Container(
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: inspirations.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    itemBuilder: (context, index) {
-                      var inspiration = inspirations[index];
-                      return Dismissible(
-                        key: Key("${inspiration.title} + $index"),
-                        onDismissed: (direction) {
-                          BlocProvider.of<InspirationsBloc>(context)
-                              .add(InspirationDeleted(inspiration));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Slettet ${inspiration.title}"),
-                            ),
-                          );
-                        },
-                        background: Row(
-                          key: YearlyFlowKeys.deleteButton,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Icon(
-                                  Icons.delete,
-                                  color:
-                                      AppColorScheme.backgroundDarkForeground,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MonthHeader(
+                      key: YearlyFlowKeys.monthHeader,
+                      month: month),
+                  Container(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.only(top: 16, bottom: 32),
+                      itemCount: inspirations.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1.294,
+                        crossAxisCount: 2,
+                      ),
+                      itemBuilder: (context, index) {
+                        var inspiration = inspirations[index];
+                        return Dismissible(
+                          key: Key("${inspiration.title} + $index"),
+                          onDismissed: (direction) {
+                            BlocProvider.of<InspirationsBloc>(context)
+                                .add(InspirationDeleted(inspiration));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Slettet ${inspiration.title}"),
+                              ),
+                            );
+                          },
+                          background: Row(
+                            key: YearlyFlowKeys.deleteButton,
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color:
+                                    AppColorScheme.backgroundDarkForeground,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Text(''),
-                            ),
-                          ],
-                        ),
-                        child: Hero(
-                          tag: "${inspiration.key}__heroTag",
-                          child: InspirationCard(
-                            inspiration: inspirations[index],
-                            onDatePicked: () => {},
-                            onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => DetailsScreen(
-                                  id: inspiration.key,
+                              Flexible(
+                                flex: 1,
+                                child: Text(''),
+                              ),
+                            ],
+                          ),
+                          child: Hero(
+                            tag: "${inspiration.key}__heroTag",
+                            child: InspirationCard(
+                              inspiration: inspirations[index],
+                              onDatePicked: () => {},
+                              onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => DetailsScreen(
+                                    id: inspiration.key,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
+                ],
               ),
             );
           },

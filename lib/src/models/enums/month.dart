@@ -69,4 +69,33 @@ extension MonthExtension on Month {
       case Month.December: return 12;
     }
   }
+
+  String get imagePath {
+    switch (this) {
+      case Month.January:
+        return 'assets/02.jpeg';
+      case Month.February:
+        return 'assets/07.jpeg';
+      case Month.March:
+        return 'assets/05.jpeg';
+      case Month.April:
+        return 'assets/06.jpeg';
+      case Month.May:
+        return 'assets/04.jpeg';
+      case Month.June:
+        return 'assets/03.jpeg';
+      case Month.July:
+        return 'assets/01.jpeg';
+      case Month.August:
+        return 'assets/05.jpeg';
+      case Month.September:
+        return 'assets/04.jpeg';
+      case Month.October:
+        return 'assets/06.jpeg';
+      case Month.November:
+        return 'assets/07.jpeg';
+      case Month.December:
+        return 'assets/02.jpeg';
+    }
+  }
 }

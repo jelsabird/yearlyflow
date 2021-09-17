@@ -43,6 +43,7 @@ dependencies:
   flutter_bloc: ^7.2.0
   bloc_test: ^8.1.0
   equatable: ^2.0.3
+  flutter_svg: ^0.22.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,19 @@ flutter:
 
   assets:
     - assets/mock_data.json
+    - assets/torn_paper.png
+    - assets/01.jpeg
+    - assets/02.jpeg
+    - assets/03.jpeg
+    - assets/04.jpeg
+    - assets/05.jpeg
+    - assets/06.jpeg
+    - assets/07.jpeg
+
+  fonts:
+    - family: Bohemian
+      fonts:
+        - asset: assets/Bohemian-rg3E9.otf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
